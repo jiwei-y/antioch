@@ -6,7 +6,7 @@
   #:use-module (gnu home services)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services shepherd)
-  #:use-module (gnu home-services-utils)
+  #:use-module (ac home home-services-utils)
   #:use-module (gnu packages)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu services configuration)
