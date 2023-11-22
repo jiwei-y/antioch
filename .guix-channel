@@ -3,10 +3,15 @@
 
 
 (channel
- (version 0)
- (url "https://github.com/jiwei-y/antioch")
- (dependencies
-  (channel
-   (name nonguix)
-   (url "https://gitlab.com/nonguix/nonguix")
-   (branch "master"))))
+  (version 0)
+  (url "https://github.com/jiwei-y/antioch")
+  (introduction
+   (make-channel-introduction
+    "140b9533fe1b93ba4144cf5de82898a5714ffc8b"
+    (openpgp-fingerprint
+     "28F9 1989 C2D4 2A84 A75A  B03C 2B00 3A5C 2273 11E3")))
+  (dependencies
+   (channel
+    (name nonguix)
+    (url "https://gitlab.com/nonguix/nonguix")
+    (branch "master"))))
