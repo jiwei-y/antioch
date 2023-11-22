@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright © 2022 Ax333l
+# Copyright © 2022 Llewelyn Trahaearn <WoefulDerelict [at] GMail [dot] com>
+# Copyright © 2022 Tobias Powalowski <tpowa [at] archlinux [dot] org>
+# Copyright © 2022 Ronald van Haren <ronald [at] archlinux [dot] org>
+# Copyright © 2022 Keshav Amburay <(the ddoott ridikulus ddoott rat) (aatt) (gemmaeiil) (ddoott) (ccoomm)>
+
+---
+ grub-core/kern/dl.c           | 3 ++-
+ util/grub-module-verifierXX.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/grub-core/kern/dl.c b/grub-core/kern/dl.c
+index 48f8a79..7d39509 100644
+--- a/grub-core/kern/dl.c
++++ b/grub-core/kern/dl.c
+@@ -462,7 +462,8 @@ grub_dl_check_license (Elf_Ehdr *e)
+   Elf_Shdr *s = grub_dl_find_section (e, ".module_license");
+   if (s && (grub_strcmp ((char *) e + s->sh_offset, "LICENSE=GPLv3") == 0
+ 	    || grub_strcmp ((char *) e + s->sh_offset, "LICENSE=GPLv3+") == 0
+-	    || grub_strcmp ((char *) e + s->sh_offset, "LICENSE=GPLv2+") == 0))
++	    || grub_strcmp ((char *) e + s->sh_offset, "LICENSE=GPLv2+") == 0
++	    || grub_strcmp ((char *) e + s->sh_offset, "LICENSE=CC0") == 0))
+     return GRUB_ERR_NONE;
+   return grub_error (GRUB_ERR_BAD_MODULE, "incompatible license");
+ }
+diff --git a/util/grub-module-verifierXX.c b/util/grub-module-verifierXX.c
+index ceb2430..284f902 100644
+--- a/util/grub-module-verifierXX.c
++++ b/util/grub-module-verifierXX.c
+@@ -157,7 +157,8 @@ check_license (const char * const filename,
+   Elf_Shdr *s = find_section (arch, e, ".module_license");
+   if (s && (strcmp ((char *) e + grub_target_to_host(s->sh_offset), "LICENSE=GPLv3") == 0
+ 	    || strcmp ((char *) e + grub_target_to_host(s->sh_offset), "LICENSE=GPLv3+") == 0
+-	    || strcmp ((char *) e + grub_target_to_host(s->sh_offset), "LICENSE=GPLv2+") == 0))
++	    || strcmp ((char *) e + grub_target_to_host(s->sh_offset), "LICENSE=GPLv2+") == 0
++	    || strcmp ((char *) e + grub_target_to_host(s->sh_offset), "LICENSE=CC0") == 0))
+     return;
+   grub_util_error ("%s: incompatible license", filename);
+ }

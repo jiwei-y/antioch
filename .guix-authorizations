@@ -1,0 +1,8 @@
+;;; SPDX-License-Identifier: CC0-1.0
+;;; Copyright © 2023 Jiwei YANG <yangjiwei@protonmail.com>
+
+
+(authorizations
+ (version 0)
+ (("28F9 1989 C2D4 2A84 A75A  B03C 2B00 3A5C 2273 11E3"     ;; signature
+   (name "Jiwei YANG"))))
