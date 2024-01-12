@@ -147,13 +147,14 @@
   `(  ;; kernel-hardening-checker (remember to apply the configs in the comments)
       ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.5/CONFIGS/xanmod/gcc/config_x86-64-v3
       ;; kernel-hardening-checker -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v3
-      ;? CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
+      ;? CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY MUST be not set
 
       ;; dependencies of hardened config (UBSAN)
       ("CONFIG_CC_HAS_UBSAN_BOUNDS" . #t)
       ("CONFIG_CC_HAS_UBSAN_ARRAY_BOUNDS" . #t)
 
       ("CONFIG_GCC_PLUGINS" . #t)
+      ("CONFIG_INIT_STACK_ALL_ZERO" . #t)
       ("CONFIG_WERROR" . #t)
       ("CONFIG_X86_KERNEL_IBT" . #t)
       ("CONFIG_BUG_ON_DATA_CORRUPTION" . #t)
@@ -162,13 +163,11 @@
       ("CONFIG_DEBUG_SG" . #t)
       ("CONFIG_DEBUG_CREDENTIALS" . #t)
       ("CONFIG_DEBUG_NOTIFIERS" . #t)
-      ("CONFIG_ZERO_CALL_USED_REGS" . #t)
       ("CONFIG_STATIC_USERMODEHELPER" . #t)
       ("CONFIG_RANDSTRUCT_FULL" . #t)
       ("CONFIG_RANDSTRUCT_PERFORMANCE" . #f)
       ("CONFIG_GCC_PLUGIN_LATENT_ENTROPY" . #t)
       ("CONFIG_MODULE_SIG_FORCE" . #t)
-      ("CONFIG_INIT_STACK_ALL_ZERO" . #t)
       ("CONFIG_INIT_ON_FREE_DEFAULT_ON" . #t)
       ("CONFIG_EFI_DISABLE_PCI_DMA" . #t)
       ("CONFIG_UBSAN_BOUNDS" . #t)
@@ -184,9 +183,11 @@
       ("CONFIG_INTEL_IOMMU_DEFAULT_ON" . #t)
       ("CONFIG_AMD_IOMMU_V2" . #t)
       ("CONFIG_SLAB_MERGE_DEFAULT" . #f)
+      ("CONFIG_LIST_HARDENED" . #t)
+      ("CONFIG_RANDOM_KMALLOC_CACHES" . #t)
       ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #f)
       ("CONFIG_SECURITY_SELINUX_DEVELOP" . #f)
-      ;("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #t)     ;; Do not change this line!
+      ("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #t)
       ("CONFIG_BINFMT_MISC" . #f)
       ("CONFIG_INET_DIAG" . #f)
       ("CONFIG_KEXEC" . #f)
@@ -197,10 +198,12 @@
       ("CONFIG_IA32_EMULATION" . #f)
       ("CONFIG_MODIFY_LDT_SYSCALL" . #f)
       ("CONFIG_X86_MSR" . #f)
+      ("CONFIG_LEGACY_TIOCSTI" . #f)
       ("CONFIG_MODULES" . #f)
       ("CONFIG_DEVMEM" . #f)
       ("CONFIG_IO_STRICT_DEVMEM" . #t)
       ("CONFIG_LDISC_AUTOLOAD" . #f)
+      ("CONFIG_X86_VSYSCALL_EMULATION" . #f)
       ("CONFIG_PROC_VMCORE" . #f)
       ("CONFIG_PROC_PAGE_MONITOR" . #f)
       ("CONFIG_USELIB" . #f)
@@ -232,19 +235,17 @@
       ("CONFIG_X86_IOPL_IOPERM" . #f)
       ("CONFIG_ACPI_TABLE_UPGRADE" . #f)
       ("CONFIG_EFI_CUSTOM_SSDT_OVERLAYS" . #f)
-      ("CONFIG_COREDUMP" . #f)
-      ("CONFIG_X86_VSYSCALL_EMULATION" . #f)
+      ("CONFIG_AIO" . #f)
       ("CONFIG_EFI_TEST" . #f)
       ("CONFIG_KPROBES" . #f)
       ("CONFIG_BPF_SYSCALL" . #f)
-      ("CONFIG_LEGACY_TIOCSTI" . #f)
       ("CONFIG_IP_DCCP" . #f)
       ("CONFIG_IP_SCTP" . #f)
       ("CONFIG_VIDEO_VIVID" . #f)
       ("CONFIG_KGDB" . #f)
-      ("CONFIG_AIO" . #f)
       ("CONFIG_XFS_SUPPORT_V4" . #f)
       ("CONFIG_TRIM_UNUSED_KSYMS" . #t)
+      ("CONFIG_COREDUMP" . #f)
     ))
   
 (define %personal-extra-options
@@ -296,9 +297,9 @@
       ;; cpu specified optimisation
       ("CONFIG_GENERIC_CPU" . #f)
       ("CONFIG_GENERIC_CPU2" . #f)
-      ("CONFIG_MZEN3" . #f)
+      ("CONFIG_MZEN3" . #t)
       ("CONFIG_MNATIVE_INTEL" . #f)
-      ("CONFIG_MNATIVE_AMD" . #t)))
+      ("CONFIG_MNATIVE_AMD" . #f)))
 
 ;(define* (kernel-config arch #:key variant)
 ;  "Return a file-like object of the Linux-Libre build configuration file for
@@ -387,7 +388,9 @@
                 (lambda* (#:key inputs #:allow-other-keys)
                   (substitute* '(".config" "arch/x86/configs/guix_defconfig")
                     (("CONFIG_ARCH_MMAP_RND_BITS=28") 
-                    "CONFIG_ARCH_MMAP_RND_BITS=32"))))))))
+                    "CONFIG_ARCH_MMAP_RND_BITS=32")
+                    (("CONFIG_KFENCE_SAMPLE_INTERVAL=0") 
+                    "CONFIG_KFENCE_SAMPLE_INTERVAL=100"))))))))
       (native-inputs
        (modify-inputs (package-native-inputs base)
          ;; cpio is needed for CONFIG_IKHEADERS.
