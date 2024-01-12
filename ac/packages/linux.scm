@@ -39,50 +39,50 @@
 (define config->string
   (@@ (gnu packages linux) config->string))
 
-(define-public upstream-version "6.5.11")
+(define-public upstream-version "6.6.11")
 (define-public upstream-major-version
   (version-major+minor upstream-version))
-(define-public xanmod-hardened-version  "6.5.11")
-(define-public xanmod-version "6.5.11")
+(define-public xanmod-hardened-version  "6.6.11")
+(define-public xanmod-version "6.6.11")
 (define-public xanmod-revision "xanmod1")
-(define-public hardened-version "6.5.11")
+(define-public hardened-version "6.6.11")
 (define-public hardened-revision "hardened1")
 
 (define-public linux-pristine-source
   (let ((version upstream-major-version)
-        ;; mirror://kernel.org/linux/kernel/v6.x/linux-6.5.tar.xz
-        ;; guix download https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.5.tar.xz -o /tmp/linux-6.5.tar.xz && rm -rf /tmp/linux-6.5.tar.xz
-        (hash (base32 "117qmckqrabja9f9260vhrg08wkz4q3syzyaa9msfbl042y4nmvs")))
+        ;; mirror://kernel.org/linux/kernel/v6.x/linux-6.6.tar.xz
+        ;; guix download https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.6.tar.xz -o /tmp/linux-6.6.tar.xz && rm -rf /tmp/linux-6.6.tar.xz
+        (hash (base32 "1l2nisx9lf2vdgkq910n5ldbi8z25ky1zvl67zgwg2nxcdna09nr")))
     (%upstream-linux-source version hash)))
 
 (define %xanmod-patch
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.5.11-xanmod1/patch-6.5.11-xanmod1.xz -o /tmp/6.5.11-xanmod1.xz && rm -rf /tmp/6.5.11-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.6.11-xanmod1/patch-6.6.11-xanmod1.xz -o /tmp/6.6.11-xanmod1.xz && rm -rf /tmp/6.6.11-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/main/" xanmod-version "-" xanmod-revision
                         "/patch-" xanmod-version "-" xanmod-revision ".xz"))
     (sha256 (base32
-             "1ahkfnfg9hyrxg0ydrv872rnqy0q694jl3p101m4kwg6kdf5j8ll"))))
+             "1ln9s2jnbryalcf2c249a5wzag7hp8rf1z744hrh9yg3p5xcllh9"))))
 
 (define %hardened-patch
   (origin
     (method url-fetch)
-    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.5.11-hardened1/linux-hardened-6.5.11-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.5.11-hardened1.patch 
+    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.6.11-hardened1/linux-hardened-6.6.11-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.6.11-hardened1.patch 
     (file-name (string-append "linux-" hardened-version "-" hardened-revision ".patch"))
     (uri (string-append
           "https://github.com/anthraxx/linux-hardened/releases/download/"
           hardened-version "-" hardened-revision "/linux-hardened-" hardened-version "-" hardened-revision ".patch"))
     (sha256 (base32
-             "1vqzm9h07cgh8szj1d6awdrfl1p7mzplbr6sxf83riapq1m13dik"))))
+             "07l4fvc115iqiwbaq916g1l1jpmcg8injr5z5dx6jp2h635w72n3"))))
 
 ; (define %adjusted-hardened-patch
 ;   (let* ((version hardened-version)
 ;          (patch (string-append "linux-" version ".patch"))
 ;          (source (origin
 ;                    (method url-fetch)
-;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.5.11-hardened1/linux-hardened-6.5.11-hardened1.patch -o /tmp/linux-6.5.11-hardened1.patch
+;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.6.11-hardened1/linux-hardened-6.6.11-hardened1.patch -o /tmp/linux-6.6.11-hardened1.patch
 ;                    (uri (string-append
 ;                          "https://github.com/anthraxx/linux-hardened/releases/download/"
 ;                          version "/linux-hardened-" version ".patch"))
@@ -109,23 +109,14 @@
 ;                 (copy-file #$patch
 ;                            #$output))))))))
 
-(define %vfio-pci-pm-patch
-  (origin
-    (method url-fetch)
-    (uri (string-append "https://patchwork.kernel.org/series/671981/mbox/"))
-    (file-name "vfio-pci-power-management-changes.patch")
-    (sha256 (base32
-             "07agmxqa338wqmf3gxf90hn1384wc621mmhl7m8xj9bliq0lqj83"))))
-
 (define-public xanmod-hardened-source
   (origin
     (inherit (source-with-patches
               linux-pristine-source
-              (list ;; %vfio-pci-pm-patch
-                    %xanmod-patch
+              (list %xanmod-patch
                     ;; %hardened-patch
                     ; find ".procname	= "unprivileged_userns_clone",", delete that trunk
-                    (local-file "patches/linux-6.5.11-hardened1.patch"))))
+                    (local-file "patches/linux-6.6.11-hardened1.patch"))))
     (modules '((guix build utils)))))
 
 ;(define-public xanmod-source
@@ -153,9 +144,9 @@
       ("CONFIG_ANDROID_BINDER_DEVICES" . "binder,hwbinder,vndbinder")))
 
 (define %khc-extra-linux-options
-  `(  ;; kconfig-hardened-check (remember to apply the configs in the comments)
-      ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v2 https://github.com/xanmod/linux/raw/6.5/CONFIGS/xanmod/gcc/config_x86-64-v2
-      ;; kconfig-hardened-check -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v2
+  `(  ;; kernel-hardening-checker (remember to apply the configs in the comments)
+      ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.5/CONFIGS/xanmod/gcc/config_x86-64-v3
+      ;; kernel-hardening-checker -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v3
       ;? CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY is not set
 
       ;; dependencies of hardened config (UBSAN)
@@ -300,7 +291,7 @@
 
       ;; use custom DSDT to enable s3 sleep, does not work due to a isolated build environment
       ;("CONFIG_ACPI_CUSTOM_DSDT" . #t)
-      ;("CONFIG_ACPI_CUSTOM_DSDT_FILE" . "/tmp/guix-build-linux-xanmod-hardened-6.5.11.drv-0/top/linux-6.5/dsdt.hex")
+      ;("CONFIG_ACPI_CUSTOM_DSDT_FILE" . "/tmp/guix-build-linux-xanmod-hardened-6.6.11.drv-0/top/linux-6.5/dsdt.hex")
 
       ;; cpu specified optimisation
       ("CONFIG_GENERIC_CPU" . #f)
@@ -312,7 +303,7 @@
 ;(define* (kernel-config arch #:key variant)
 ;  "Return a file-like object of the Linux-Libre build configuration file for
 ;ARCH and optionally VARIANT, or #f if there is no such configuration."
-;  (let* ((file "config_x86-64-v2"))
+;  (let* ((file "config_x86-64-v3"))
 ;    (local-file (search-me-auxiliary-file file))))
 
 
@@ -347,7 +338,7 @@
 (define-public linux-xanmod-hardened
   (let ((base (customize-linux #:name "linux-xanmod-hardened"
                                #:source xanmod-hardened-source
-                               #:defconfig "config_x86-64-v2"
+                               #:defconfig "config_x86-64-v3"
                                ;; Extraversion is used instead.
                                #:configs (config->string
                                           '(("CONFIG_LOCALVERSION" . "")))
@@ -376,7 +367,7 @@
                               "tr -d '"))))
               (add-before 'configure 'add-defconfig
                 (lambda _
-                  (copy-file "CONFIGS/xanmod/gcc/config_x86-64-v2" ".config")
+                  (copy-file "CONFIGS/xanmod/gcc/config_x86-64-v3" ".config")
                   ;; Adapted from `make-linux-libre*'.
                   (chmod ".config" #o666)
                   (let ((port (open-file ".config" "a"))
@@ -390,7 +381,7 @@
                     (display extra-configuration port)
                     (close-port port))
                   (invoke "make" "oldconfig")
-                  (rename-file ".config" "arch/x86/configs/config_x86-64-v2")))
+                  (rename-file ".config" "arch/x86/configs/config_x86-64-v3")))
               (add-after 'configure 'harden-config
               ;; do some harden which we can't do in extra options
                 (lambda* (#:key inputs #:allow-other-keys)
@@ -400,7 +391,7 @@
       (native-inputs
        (modify-inputs (package-native-inputs base)
          ;; cpio is needed for CONFIG_IKHEADERS.
-         (append gcc-12 cpio zstd)))
+         (append gcc-13 cpio zstd)))
       (home-page "https://github.com/anthraxx/linux-hardened")
       (supported-systems '("x86_64-linux"))
       (synopsis
@@ -414,7 +405,7 @@
 ;                         ""
 ;                         xanmod-hardened-source
 ;                         '("x86_64-linux" "i686-linux")
-;                         #:defconfig "config_x86-64-v2"
+;                         #:defconfig "config_x86-64-v3"
 ;                         #:extra-options (append
 ;                                          ; %waydroid-extra-linux-options
 ;                                          %khc-extra-linux-options
@@ -446,7 +437,7 @@
 ;                      (("CONFIG_ARCH_MMAP_RND_BITS=28") 
 ;                      "CONFIG_ARCH_MMAP_RND_BITS=32"))))))))
 ;      (native-inputs (modify-inputs (package-native-inputs linux-libre)
-;                      (append gcc-12 cpio zstd)))
+;                      (append gcc-13 cpio zstd)))
 ;    (home-page "https://github.com/anthraxx/linux-hardened")
 ;    (synopsis "Xanmod + hardened")
 ;    (description
@@ -490,7 +481,7 @@
 ;                      (("CONFIG_ARCH_MMAP_RND_BITS=28") 
 ;                      "CONFIG_ARCH_MMAP_RND_BITS=32"))))))))
 ;      (native-inputs (modify-inputs (package-native-inputs linux-libre)
-;                      (append gcc-12 cpio zstd)))
+;                      (append gcc-13 cpio zstd)))
 ;      (home-page "https://xanmod.org/")
 ;      (synopsis "The Linux kernel and modules with Xanmod patches")
 ;      (description
@@ -505,7 +496,7 @@
 ;    (name "linux-xanmod-headers")
 ;    (version version)
 ;    (native-inputs (modify-inputs (package-native-inputs linux-libre-headers)
-;                     (append gcc-12)))
+;                     (append gcc-13)))
 ;    (home-page "https://xanmod.org/")
 ;    (synopsis "Linux-Xanmod kernel headers")
 ;    (description "Headers of the Linux-Xanmod kernel.")))
@@ -548,7 +539,7 @@
 ;                      (("CONFIG_ARCH_MMAP_RND_BITS=28") 
 ;                      "CONFIG_ARCH_MMAP_RND_BITS=32"))))))))
 ;      (native-inputs (modify-inputs (package-native-inputs linux-libre)
-;                      (append gcc-12 cpio zstd)))
+;                      (append gcc-13 cpio zstd)))
 ;    (home-page "https://github.com/anthraxx/linux-hardened")
 ;    (synopsis "Minimal supplement to upstream Kernel Self Protection Project changes")
 ;    (description
@@ -562,7 +553,7 @@
 ;    (name "linux-hardened-headers")
 ;    (version version)
 ;    (native-inputs (modify-inputs (package-native-inputs linux-libre-headers)
-;                     (append gcc-12)))
+;                     (append gcc-13)))
 ;    (home-page "https://github.com/anthraxx/linux-hardened")
 ;    (synopsis "Linux-hardened kernel headers")
 ;    (description "Headers of the Linux-hardened kernel.")))
@@ -629,22 +620,22 @@
                (base32
                 "0k0z9caj48nqjwk3bapgfcdzi1lkizxcjj4r1dvkvwsk38mbk1c4"))))))
 
-(define-public kconfig-hardened-check-git
+(define-public kernel-hardening-checker-git
   (package
     (inherit kconfig-hardened-check)
-    (name "kconfig-hardened-check-git")
-    (version "20231018")
+    (name "kernel-hardening-checker-git")
+    (version "20231230")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/a13xp0p0v/kconfig-hardened-check")
-             ; https://github.com/a13xp0p0v/kconfig-hardened-check/commits/master
-             (commit "0945ed918e4c1278691b491f9dde8b2ba398e401")))
+             (url "https://github.com/a13xp0p0v/kernel-hardening-checker")
+             ; https://github.com/a13xp0p0v/kernel-hardening-checker/commits/master
+             (commit "847a31d7e71c2ae396168622a63f7c47c46bd065")))
        (file-name (git-file-name name version))
        (sha256
-        ; git clone --depth 1 https://github.com/a13xp0p0v/kconfig-hardened-check /tmp/kconfig-hardened-check && guix hash --serializer=nar -x /tmp/kconfig-hardened-check && rm -rf /tmp/kconfig-hardened-check
-        (base32 "04wyhw3rjba164qgyknfrldzi1jx95r684qpmas9qmfxdy92afri"))))
+        ; git clone --depth 1 https://github.com/a13xp0p0v/kernel-hardening-checker /tmp/kernel-hardening-checker && guix hash --serializer=nar -x /tmp/kernel-hardening-checker && rm -rf /tmp/kernel-hardening-checker
+        (base32 "06m7lbbznnviav8az7jqb6k5m1n36azx90n8sdrgxiy5jypsz1an"))))
     (license gpl3)))
 
 (define-public tlp-git
@@ -727,7 +718,7 @@
 ;                 (add-after 'unpack 'patch-randstruct
 ;                 ;; customize the kernel RANDSTRUCT seed
 ;                   (lambda* (#:key inputs target #:allow-other-keys)
-;                     (let ((config (search-input-file linux-module-builder "lib/modules/build/CONFIGS/xanmod/gcc/config_x86-64-v2")))
+;                     (let ((config (search-input-file linux-module-builder "lib/modules/build/CONFIGS/xanmod/gcc/config_x86-64-v3")))
 ;                             (setenv "RANDSTRUCT_CFG" config)
 ;                             (substitute* (search-input-file linux-module-builder "gen-randstruct-seed.sh")
 ;                               (("od -A n -t x8 -N 32 /dev/urandom") 
