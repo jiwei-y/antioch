@@ -147,7 +147,7 @@
   `(  ;; kernel-hardening-checker (remember to apply the configs in the comments)
       ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.5/CONFIGS/xanmod/gcc/config_x86-64-v3
       ;; kernel-hardening-checker -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v3
-      ;? CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY MUST be not set
+      ;; CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY MUST be not set
 
       ;; dependencies of hardened config (UBSAN)
       ("CONFIG_CC_HAS_UBSAN_BOUNDS" . #t)
@@ -187,7 +187,7 @@
       ("CONFIG_RANDOM_KMALLOC_CACHES" . #t)
       ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #f)
       ("CONFIG_SECURITY_SELINUX_DEVELOP" . #f)
-      ("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #t)
+      ;("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #t)
       ("CONFIG_BINFMT_MISC" . #f)
       ("CONFIG_INET_DIAG" . #f)
       ("CONFIG_KEXEC" . #f)
