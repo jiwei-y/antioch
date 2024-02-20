@@ -113,14 +113,37 @@
             (lambda* (#:key outputs #:allow-other-keys)
               (let* ((out (assoc-ref outputs "out"))
                      (font-dir (string-append out "/share/fonts")))
-                (for-each (lambda (fulldir)   ;; check availability in order of variable -> otf -> ttf
-                            (with-directory-excursion fulldir
-                              (if (directory-exists? "variable-ttf")
-                                  (copy-recursively "variable-ttf" font-dir)
-                                  (if (directory-exists? "otf")
-                                      (copy-recursively "otf" font-dir)
-                                      (copy-recursively "ttf" font-dir)))))
-                          (find-files "fonts" "full" #:directories? #t)) ;; Searching /full in all Noto fonts folders
+                (for-each (lambda (notofont)
+                            (with-directory-excursion notofont
+                              (if (directory-exists? "full")
+                                  (for-each (lambda (fulldir)   ;; check availability in order of variable -> otf -> ttf
+                                              (with-directory-excursion fulldir
+                                                (if (directory-exists? "variable-ttf")
+                                                    (copy-recursively "variable-ttf" font-dir)
+                                                    (if (directory-exists? "otf")
+                                                        (copy-recursively "otf" font-dir)
+                                                        (copy-recursively "ttf" font-dir)))))
+                                            (find-files "." "full" #:directories? #t)) ;; searching /full in current Noto font folder
+                                  (if (directory-exists? "googlefonts")
+                                      (for-each (lambda (googledir)   ;; check availability in order of variable -> otf -> ttf
+                                                  (with-directory-excursion googledir
+                                                    (if (directory-exists? "variable-ttf")
+                                                        (copy-recursively "variable-ttf" font-dir)
+                                                        (if (directory-exists? "otf")
+                                                            (copy-recursively "otf" font-dir)
+                                                            (copy-recursively "ttf" font-dir)))))
+                                                (find-files "." "googlefonts" #:directories? #t))
+                                      (if (directory-exists? "unhinted")
+                                          (for-each (lambda (unhinteddir)   ;; check availability in order of variable -> otf -> ttf
+                                                      (with-directory-excursion unhinteddir
+                                                        (if (directory-exists? "variable-ttf")
+                                                            (copy-recursively "variable-ttf" font-dir)
+                                                            (if (directory-exists? "otf")
+                                                                (copy-recursively "otf" font-dir)
+                                                                (copy-recursively "ttf" font-dir)))))
+                                                    (find-files "." "unhinted" #:directories? #t))))))) ;; searching /unhinted in current Noto font folder
+                          (filter directory-exists?
+                            (find-files "fonts" "Noto" #:directories? #t))) ;; searching all Noto fonts folders
                 #t))))))))
 
 (define-public font-google-noto-sans-cjk-superotc
@@ -170,7 +193,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone --depth 1 https://github.com/googlefonts/noto-emoji /tmp/noto-emoji && guix hash --serializer=nar -x /tmp/noto-emoji && rm -rf /tmp/noto-emoji
+        ;; git clone -b v2.042 --depth 1 https://github.com/googlefonts/noto-emoji /tmp/noto-emoji && guix hash --serializer=nar -x /tmp/noto-emoji && rm -rf /tmp/noto-emoji
         (base32
-         "1rgmcc6nqq805iqr8kvxxlk5cf50q714xaxk3ld6rjrd69kb8ix9"))))))
+         "17i7awyqz9jv0j2blcf0smmpas375c3pdhjv1zqzl861g8qm1lm2"))))))
 
