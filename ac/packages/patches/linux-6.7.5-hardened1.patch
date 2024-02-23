@@ -102,13 +102,13 @@ index 7afff42612e9..af3a017de419 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index 73a208d9d4c4..a3a8352a8b76 100644
+index 0f5bb9ddc98f..7897ed2ca9c9 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 7
- SUBLEVEL = 4
+ SUBLEVEL = 5
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
@@ -780,7 +780,7 @@ index f238d987dec9..1c49bae96084 100644
  };
  
 diff --git a/fs/namei.c b/fs/namei.c
-index 29bafbdb44ca..6b2cf18b17aa 100644
+index c981dec3c582..3e0cb83a5728 100644
 --- a/fs/namei.c
 +++ b/fs/namei.c
 @@ -1028,10 +1028,10 @@ static inline void put_link(struct nameidata *nd)
@@ -1549,10 +1549,10 @@ index 157f7ce2942d..2411555d9cdc 100644
  EXPORT_SYMBOL(proc_dointvec_ms_jiffies);
  EXPORT_SYMBOL(proc_dostring);
 diff --git a/kernel/time/hrtimer.c b/kernel/time/hrtimer.c
-index 760793998cdd..09cc9db43b35 100644
+index edb0f821dcea..494516a675ba 100644
 --- a/kernel/time/hrtimer.c
 +++ b/kernel/time/hrtimer.c
-@@ -1756,7 +1756,7 @@ static void __hrtimer_run_queues(struct hrtimer_cpu_base *cpu_base, ktime_t now,
+@@ -1757,7 +1757,7 @@ static void __hrtimer_run_queues(struct hrtimer_cpu_base *cpu_base, ktime_t now,
  	}
  }
  
