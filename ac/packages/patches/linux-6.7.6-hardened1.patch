@@ -102,23 +102,23 @@ index 7afff42612e9..af3a017de419 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index 0f5bb9ddc98f..7897ed2ca9c9 100644
+index d07a8e0179ac..f5fcdd109508 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 7
- SUBLEVEL = 5
+ SUBLEVEL = 6
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
  
  # *DOCUMENTATION*
 diff --git a/arch/Kconfig b/arch/Kconfig
-index f4b210ab0612..dd95200a1368 100644
+index a27129d48667..3764f313b94a 100644
 --- a/arch/Kconfig
 +++ b/arch/Kconfig
-@@ -1032,7 +1032,7 @@ config ARCH_MMAP_RND_BITS
+@@ -1033,7 +1033,7 @@ config ARCH_MMAP_RND_BITS
  	int "Number of bits to use for ASLR of mmap base address" if EXPERT
  	range ARCH_MMAP_RND_BITS_MIN ARCH_MMAP_RND_BITS_MAX
  	default ARCH_MMAP_RND_BITS_DEFAULT if ARCH_MMAP_RND_BITS_DEFAULT
@@ -127,7 +127,7 @@ index f4b210ab0612..dd95200a1368 100644
  	depends on HAVE_ARCH_MMAP_RND_BITS
  	help
  	  This value can be used to select the number of bits to use to
-@@ -1066,7 +1066,7 @@ config ARCH_MMAP_RND_COMPAT_BITS
+@@ -1067,7 +1067,7 @@ config ARCH_MMAP_RND_COMPAT_BITS
  	int "Number of bits to use for ASLR of mmap base address for compatible applications" if EXPERT
  	range ARCH_MMAP_RND_COMPAT_BITS_MIN ARCH_MMAP_RND_COMPAT_BITS_MAX
  	default ARCH_MMAP_RND_COMPAT_BITS_DEFAULT if ARCH_MMAP_RND_COMPAT_BITS_DEFAULT
@@ -136,7 +136,7 @@ index f4b210ab0612..dd95200a1368 100644
  	depends on HAVE_ARCH_MMAP_RND_COMPAT_BITS
  	help
  	  This value can be used to select the number of bits to use to
-@@ -1280,6 +1280,7 @@ config RANDOMIZE_KSTACK_OFFSET
+@@ -1281,6 +1281,7 @@ config RANDOMIZE_KSTACK_OFFSET
  config RANDOMIZE_KSTACK_OFFSET_DEFAULT
  	bool "Default state of kernel stack offset randomization"
  	depends on RANDOMIZE_KSTACK_OFFSET
@@ -373,7 +373,7 @@ index 25726893c6f4..cd4b5781260d 100644
  	native_write_cr4(cr4);
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index b14fc8c1c953..468e99ddc18e 100644
+index 98f7ea6b931c..4d1f5ae5784d 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
 @@ -439,6 +439,7 @@ EXPORT_SYMBOL_GPL(native_write_cr4);
@@ -493,10 +493,10 @@ index a190aae8ceaf..c4d6a53b5ed5 100644
  /* Used in PAGE_KERNEL_* macros which are reasonably used out-of-tree: */
  EXPORT_SYMBOL(__default_kernel_pte_mask);
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index a71974a5e57c..b7082d291092 100644
+index a02d3d922c58..c27d77e758e0 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1131,7 +1131,7 @@ static void blk_complete_reqs(struct llist_head *list)
+@@ -1136,7 +1136,7 @@ static void blk_complete_reqs(struct llist_head *list)
  		rq->q->mq_ops->complete(rq);
  }
  
@@ -628,10 +628,10 @@ index 7d338e9c0657..64ac3c36fa1a 100644
  ifdef CONFIG_USB_ONBOARD_HUB
  usbcore-y			+= ../misc/onboard_usb_hub_pdevs.o
 diff --git a/drivers/usb/core/hub.c b/drivers/usb/core/hub.c
-index ef8d9bda94ac..c60abeaefb02 100644
+index 4854d883e601..12a6b022b8e5 100644
 --- a/drivers/usb/core/hub.c
 +++ b/drivers/usb/core/hub.c
-@@ -5335,6 +5335,12 @@ static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
+@@ -5353,6 +5353,12 @@ static void hub_port_connect(struct usb_hub *hub, int port1, u16 portstatus,
  			goto done;
  		return;
  	}
@@ -1155,10 +1155,10 @@ index 87f0e6c2e1f2..bae27ccb78d0 100644
  #define TCP_RACK_LOSS_DETECTION  0x1 /* Use RACK to detect losses */
  #define TCP_RACK_STATIC_REO_WND  0x2 /* Use static RACK reo wnd */
 diff --git a/init/Kconfig b/init/Kconfig
-index 9ffb103fc927..7c6ae01d5642 100644
+index bfde8189c2be..3b7b732d645f 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
-@@ -449,6 +449,7 @@ config USELIB
+@@ -458,6 +458,7 @@ config USELIB
  config AUDIT
  	bool "Auditing support"
  	depends on NET
@@ -1166,7 +1166,7 @@ index 9ffb103fc927..7c6ae01d5642 100644
  	help
  	  Enable auditing infrastructure that can be used with another
  	  kernel subsystem, such as SELinux (which requires this for
-@@ -1226,6 +1227,22 @@ config USER_NS
+@@ -1235,6 +1236,22 @@ config USER_NS
  
  	  If unsure, say N.
  
@@ -1189,7 +1189,7 @@ index 9ffb103fc927..7c6ae01d5642 100644
  config PID_NS
  	bool "PID Namespaces"
  	default y
-@@ -1461,9 +1478,8 @@ menuconfig EXPERT
+@@ -1470,9 +1487,8 @@ menuconfig EXPERT
  	  Only use this if you really know what you are doing.
  
  config UID16
@@ -1200,7 +1200,7 @@ index 9ffb103fc927..7c6ae01d5642 100644
  	help
  	  This enables the legacy 16-bit UID syscall wrappers.
  
-@@ -1492,14 +1508,13 @@ config SGETMASK_SYSCALL
+@@ -1501,14 +1517,13 @@ config SGETMASK_SYSCALL
  	  If unsure, leave the default option here.
  
  config SYSFS_SYSCALL
@@ -1217,7 +1217,7 @@ index 9ffb103fc927..7c6ae01d5642 100644
  
  config FHANDLE
  	bool "open by fhandle syscalls" if EXPERT
-@@ -1638,8 +1653,7 @@ config SHMEM
+@@ -1647,8 +1662,7 @@ config SHMEM
  	  which may be appropriate on small systems without swap.
  
  config AIO
@@ -1672,10 +1672,10 @@ index 2d5329a42105..08b242bbdbdf 100644
  	struct list_head *list = this_cpu_ptr(&blk_cpu_iopoll);
  	int rearm = 0, budget = irq_poll_budget;
 diff --git a/lib/kobject.c b/lib/kobject.c
-index 59dbcbdb1c91..fb7d3ec1b544 100644
+index 72fa20f405f1..c5e9051f0925 100644
 --- a/lib/kobject.c
 +++ b/lib/kobject.c
-@@ -1015,9 +1015,9 @@ EXPORT_SYMBOL_GPL(kset_create_and_add);
+@@ -1019,9 +1019,9 @@ EXPORT_SYMBOL_GPL(kset_create_and_add);
  
  
  static DEFINE_SPINLOCK(kobj_ns_type_lock);
@@ -1879,7 +1879,7 @@ index 513bad672708..3be2c9f550ca 100644
  }
  
 diff --git a/mm/mmap.c b/mm/mmap.c
-index aa82eec17489..5432209a06db 100644
+index b9a43872acad..1e694d588dc8 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
 @@ -218,6 +218,13 @@ SYSCALL_DEFINE1(brk, unsigned long, brk)
@@ -2630,7 +2630,7 @@ index e383cda05367..929997fb5e45 100644
  	  secure!
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index cb6406f485a9..513b81050aa3 100644
+index f7c4d3fe4381..b42d34cedced 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -38,6 +38,8 @@ static bool sec_mismatch_warn_only = true;
@@ -2642,7 +2642,7 @@ index cb6406f485a9..513b81050aa3 100644
  /* ignore missing files */
  static bool ignore_missing_files;
  /* If set to 1, only warn (instead of error) about missing ns imports */
-@@ -823,6 +825,7 @@ enum mismatch {
+@@ -824,6 +826,7 @@ enum mismatch {
  	ANY_INIT_TO_ANY_EXIT,
  	ANY_EXIT_TO_ANY_INIT,
  	EXTABLE_TO_NON_TEXT,
@@ -2650,7 +2650,7 @@ index cb6406f485a9..513b81050aa3 100644
  };
  
  /**
-@@ -885,6 +888,12 @@ static const struct sectioncheck sectioncheck[] = {
+@@ -886,6 +889,12 @@ static const struct sectioncheck sectioncheck[] = {
  	.bad_tosec = { ".altinstr_replacement", NULL },
  	.good_tosec = {ALL_TEXT_SECTIONS , NULL},
  	.mismatch = EXTABLE_TO_NON_TEXT,
@@ -2663,7 +2663,7 @@ index cb6406f485a9..513b81050aa3 100644
  }
  };
  
-@@ -1057,7 +1066,13 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
+@@ -1058,7 +1067,13 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  	if (!secref_whitelist(fromsec, fromsym, tosec, tosym))
  		return;
  
@@ -2678,7 +2678,7 @@ index cb6406f485a9..513b81050aa3 100644
  
  	warn("%s: section mismatch in reference: %s+0x%x (section: %s) -> %s (section: %s)\n",
  	     modname, fromsym, (unsigned int)(faddr - from->st_value), fromsec, tosym, tosec);
-@@ -1082,6 +1097,11 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
+@@ -1083,6 +1098,11 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  		else
  			error("%s+0x%lx references non-executable section '%s'\n",
  			      fromsec, (long)faddr, tosec);
@@ -2690,7 +2690,7 @@ index cb6406f485a9..513b81050aa3 100644
  	}
  }
  
-@@ -2183,7 +2203,7 @@ int main(int argc, char **argv)
+@@ -2184,7 +2204,7 @@ int main(int argc, char **argv)
  	LIST_HEAD(dump_lists);
  	struct dump_list *dl, *dl2;
  
@@ -2699,7 +2699,7 @@ index cb6406f485a9..513b81050aa3 100644
  		switch (opt) {
  		case 'e':
  			external_module = true;
-@@ -2193,6 +2213,9 @@ int main(int argc, char **argv)
+@@ -2194,6 +2214,9 @@ int main(int argc, char **argv)
  			dl->file = optarg;
  			list_add_tail(&dl->list, &dump_lists);
  			break;
@@ -2709,7 +2709,7 @@ index cb6406f485a9..513b81050aa3 100644
  		case 'M':
  			module_enabled = true;
  			break;
-@@ -2283,5 +2306,11 @@ int main(int argc, char **argv)
+@@ -2284,5 +2307,11 @@ int main(int argc, char **argv)
  		warn("suppressed %u unresolved symbol warnings because there were too many)\n",
  		     nr_unresolved - MAX_UNRESOLVED_REPORTS);
  
