@@ -1,4 +1,5 @@
-;;; SPDX-License-Identifier: AGPL-3.0-or-later
+;;; SPDX-License-Identifier: GPL-3.0-or-later
+;;; Copyright © 2023 Hilton Chain <hako@ultrarare.space>
 ;;; Copyright © 2023 Jiwei YANG <yangjiwei@protonmail.com>
 
 

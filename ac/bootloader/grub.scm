@@ -4,8 +4,6 @@
 ;;; Copyright © 2022 Fredrik Salomonsson <plattfot@posteo.net>
 ;;; Copyright © 2022 Jonathan Brielmaier <jonathan.brielmaier@web.de>
 ;;; Copyright © 2023 Hilton Chain <hako@ultrarare.space>
-
-;;; SPDX-License-Identifier: AGPL-3.0-or-later
 ;;; Copyright © 2023 Jiwei YANG <yangjiwei@protonmail.com>
 
 

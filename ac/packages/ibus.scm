@@ -1,34 +1,4 @@
-;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022 Ricardo Wurmus <rekado@elephly.net>
-;;; Copyright © 2015 Andreas Enge <andreas@enge.fr>
-;;; Copyright © 2016 Chris Marusich <cmmarusich@gmail.com>
-;;; Copyright © 2017, 2018 Efraim Flashner <efraim@flashner.co.il>
-;;; Copyright © 2018, 2019 Tobias Geerinckx-Rice <me@tobias.gr>
-;;; Copyright © 2018, 2019, 2020, 2021 Peng Mei Yu <pengmeiyu@riseup.net>
-;;; Copyright © 2020 kanichos <kanichos@yandex.ru>
-;;; Copyright © 2020 Vincent Legoll <vincent.legoll@gmail.com>
-;;; Copyright © 2021 Felix Gruber <felgru@posteo.net>
-;;; Copyright © 2021 Songlin Jiang <hollowman@hollowman.ml>
-;;; Copyright © 2021 Taiju HIGASHI <higashi@taiju.info>
-;;; Copyright © 2022 Maxim Cournoyer <maxim.cournoyer@gmail.com>
-;;; Copyright © 2023 Luis Felipe López Acevedo <luis.felipe.la@protonmail.com>
-;;;
-;;; This file is part of GNU Guix.
-;;;
-;;; GNU Guix is free software; you can redistribute it and/or modify it
-;;; under the terms of the GNU General Public License as published by
-;;; the Free Software Foundation; either version 3 of the License, or (at
-;;; your option) any later version.
-;;;
-;;; GNU Guix is distributed in the hope that it will be useful, but
-;;; WITHOUT ANY WARRANTY; without even the implied warranty of
-;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;;; GNU General Public License for more details.
-;;;
-;;; You should have received a copy of the GNU General Public License
-;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
-
-;;; SPDX-License-Identifier: AGPL-3.0-or-later
+;;; SPDX-License-Identifier: GPL-3.0-or-later
 ;;; Copyright © 2023 Jiwei YANG <yangjiwei@protonmail.com>
 
 
