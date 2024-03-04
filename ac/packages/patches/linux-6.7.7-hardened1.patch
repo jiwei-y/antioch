@@ -102,13 +102,13 @@ index 7afff42612e9..af3a017de419 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index d07a8e0179ac..f5fcdd109508 100644
+index 72ee3609aae3..202bca1bf667 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 7
- SUBLEVEL = 6
+ SUBLEVEL = 7
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
@@ -506,10 +506,10 @@ index a02d3d922c58..c27d77e758e0 100644
  	blk_complete_reqs(this_cpu_ptr(&blk_cpu_done));
  }
 diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index 09ed67772fae..ba0f53cc3a65 100644
+index be3412cdb22e..23ab27b03a20 100644
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
-@@ -4795,7 +4795,7 @@ void __ata_qc_complete(struct ata_queued_cmd *qc)
+@@ -4800,7 +4800,7 @@ void __ata_qc_complete(struct ata_queued_cmd *qc)
  	struct ata_port *ap;
  	struct ata_link *link;
  
@@ -936,10 +936,10 @@ index 0c356a517991..1f7176393417 100644
  {
  	return true;
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 98b7a7a8c42e..4d10a7fa3cf0 100644
+index 7f659c26794b..8c22ba2ca8a5 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -3447,4 +3447,15 @@ extern int vfs_fadvise(struct file *file, loff_t offset, loff_t len,
+@@ -3449,4 +3449,15 @@ extern int vfs_fadvise(struct file *file, loff_t offset, loff_t len,
  extern int generic_fadvise(struct file *file, loff_t offset, loff_t len,
  			   int advice);
  
@@ -1143,7 +1143,7 @@ index 6030a8235617..60b7fe5fa74a 100644
  {
  	return &init_user_ns;
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 87f0e6c2e1f2..bae27ccb78d0 100644
+index 2ac9475be144..2e91b9d3a0ce 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
 @@ -257,6 +257,7 @@ static_assert((1 << ATO_BITS) > TCP_DELACK_MAX);
@@ -1593,7 +1593,7 @@ index eabe8bcc7042..ac9d1f702086 100644
  static DEFINE_MUTEX(userns_state_mutex);
  
 diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 4405f81248fb..94ec2899d665 100644
+index ef39dffffd4b..80c75be03c01 100644
 --- a/lib/Kconfig.debug
 +++ b/lib/Kconfig.debug
 @@ -505,6 +505,9 @@ config SECTION_MISMATCH_WARN_ONLY

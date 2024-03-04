@@ -39,13 +39,13 @@
 (define config->string
   (@@ (gnu packages linux) config->string))
 
-(define-public upstream-version "6.7.6")
+(define-public upstream-version "6.7.7")
 (define-public upstream-major-version
   (version-major+minor upstream-version))
-(define-public xanmod-hardened-version  "6.7.6")
-(define-public xanmod-version "6.7.6")
+(define-public xanmod-hardened-version  "6.7.7")
+(define-public xanmod-version "6.7.7")
 (define-public xanmod-revision "xanmod1")
-(define-public hardened-version "6.7.6")
+(define-public hardened-version "6.7.7")
 (define-public hardened-revision "hardened1")
 
 (define-public linux-pristine-source
@@ -58,18 +58,18 @@
 (define %xanmod-patch-main
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.7.6-xanmod1/patch-6.7.6-xanmod1.xz -o /tmp/6.7.6-xanmod1.xz && rm -rf /tmp/6.7.6-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.7.7-xanmod1/patch-6.7.7-xanmod1.xz -o /tmp/6.7.7-xanmod1.xz && rm -rf /tmp/6.7.7-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/main/" xanmod-version "-" xanmod-revision
                         "/patch-" xanmod-version "-" xanmod-revision ".xz"))
     (sha256 (base32
-             "0hv76dj9z17w6zcy25v1ndlmdw593wlbmnw5x903vidb3c6a1dfi"))))
+             "1g7sc1ri96mavdm1v4jz70jgapgkmdi881lh9bgzzvhgpbk65y0v"))))
 
 (define %xanmod-patch-edge
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.7.6-xanmod1/patch-6.7.6-xanmod1.xz -o /tmp/6.7.6-xanmod1.xz && rm -rf /tmp/6.7.6-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.7.7-xanmod1/patch-6.7.7-xanmod1.xz -o /tmp/6.7.7-xanmod1.xz && rm -rf /tmp/6.7.7-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/edge/" xanmod-version "-" xanmod-revision
@@ -80,20 +80,20 @@
 (define %hardened-patch
   (origin
     (method url-fetch)
-    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.6-hardened1/linux-hardened-6.7.6-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.7.6-hardened1.patch 
+    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.7-hardened1/linux-hardened-6.7.7-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.7.7-hardened1.patch 
     (file-name (string-append "linux-" hardened-version "-" hardened-revision ".patch"))
     (uri (string-append
           "https://github.com/anthraxx/linux-hardened/releases/download/"
           hardened-version "-" hardened-revision "/linux-hardened-" hardened-version "-" hardened-revision ".patch"))
     (sha256 (base32
-             "063yrs3g0knlz37aq979jhng9k6l19873nbi1jy167xfqmpqqajr"))))
+             "1hixrbd678fg803wrwziyry8w1arb7kgcwx41ghm1sp85afkw7w6"))))
 
 ; (define %adjusted-hardened-patch
 ;   (let* ((version hardened-version)
 ;          (patch (string-append "linux-" version ".patch"))
 ;          (source (origin
 ;                    (method url-fetch)
-;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.6-hardened1/linux-hardened-6.7.6-hardened1.patch -o /tmp/linux-6.7.6-hardened1.patch
+;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.7-hardened1/linux-hardened-6.7.7-hardened1.patch -o /tmp/linux-6.7.7-hardened1.patch
 ;                    (uri (string-append
 ;                          "https://github.com/anthraxx/linux-hardened/releases/download/"
 ;                          version "/linux-hardened-" version ".patch"))
@@ -128,7 +128,7 @@
                     ;%xanmod-patch-edge
                     ;%hardened-patch
                     ;; find ".procname	= "unprivileged_userns_clone",", delete that trunk
-                    (local-file "patches/linux-6.7.6-hardened1.patch"))))
+                    (local-file "patches/linux-6.7.7-hardened1.patch"))))
     (modules '((guix build utils)))))
 
 ;(define-public xanmod-source
@@ -419,7 +419,7 @@
   (package 
     (inherit lkrg-git)
     (name "lkrg-stable")
-    (version "0.9.7")
+    (version "0.9.8")
     (source (origin
               (method git-fetch)
               (uri (git-reference
@@ -427,9 +427,9 @@
                     (commit (string-append "v" version))))
               (file-name (git-file-name name version))
               (sha256
-               ; git clone -b v0.9.7 --depth 1 https://github.com/lkrg-org/lkrg /tmp/lkrg && guix hash --serializer=nar -x /tmp/lkrg && rm -rf /tmp/lkrg
+               ; git clone -b v0.9.8 --depth 1 https://github.com/lkrg-org/lkrg /tmp/lkrg && guix hash --serializer=nar -x /tmp/lkrg && rm -rf /tmp/lkrg
                (base32
-                "0k0z9caj48nqjwk3bapgfcdzi1lkizxcjj4r1dvkvwsk38mbk1c4"))))))
+                "0vwsbp57bsp3fj4kap791vj7swqpkb4jv18w8dcizp4dxnl4lvrp"))))))
 
 (define-public kernel-hardening-checker-git
   (package
@@ -453,17 +453,17 @@
   (package
     (inherit tlp)
     (name "tlp-git")
-    (version "20240114")
+    (version "20240303")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/linrunner/TLP")
-             (commit "ac8b5e78827ad533c944aa777e62db116cb168e9")))
+             (commit "3a12e12fd2bea8e7662c3dd7b646e124f8c60168")))
        (file-name (git-file-name name version))
        (sha256
         ;; git clone --depth 1 https://github.com/linrunner/TLP /tmp/TLP && guix hash --serializer=nar -x /tmp/TLP && rm -rf /tmp/TLP
-        (base32 "0mwlphfqkgpa2arnz2ldcfcc3s19lxfnhx2gxkw2rjp8ksrpr8bx"))))
+        (base32 "1gyhx1i2z2yipgpnjylmspzhv2cxmf5f0rx9si9l28zpjwan3g2y"))))
     (arguments
         (substitute-keyword-arguments (package-arguments tlp)
           ((#:phases phases)
