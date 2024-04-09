@@ -105,9 +105,9 @@ privacy. See our website for more information.")
                     (commit "fb44fb1421941ab192229ff133bc28feeb4a8ce5")
                     (recursive? #t)))
               (file-name (git-file-name name version))
-              ; git clone https://github.com/Qv2ray/Qv2ray /tmp/Qv2ray
-              ; guix hash --serializer=nar -x /tmp/Qv2ray
-              ; rm -rf /tmp/Qv2ray
+              ; git clone https://github.com/Qv2ray/Qv2ray /tmp/ac/Qv2ray
+              ; guix hash --serializer=nar -x /tmp/ac/Qv2ray
+              ; rm -rf /tmp/ac/Qv2ray
               (sha256
                (base32
                 "1dg7i1488pdbq682nrqzbj8xy271ngb09sbm2q80mj6ann006y2f"))))
@@ -244,7 +244,7 @@ privacy. See our website for more information.")
 ;                    (commit version)
 ;                    (recursive? #t)))
 ;              (file-name (git-file-name name version))
-;              ; git clone https://github.com/MatsuriDayo/nekoray /tmp/nekoray && guix hash --serializer=nar -x /tmp/nekoray && rm -rf /tmp/nekoray
+;              ; git clone https://github.com/MatsuriDayo/nekoray /tmp/ac/nekoray && guix hash --serializer=nar -x /tmp/ac/nekoray && rm -rf /tmp/ac/nekoray
 ;              (sha256
 ;               (base32
 ;                "1dqhkydwy8qqyjlhgg7bm5hfnw2h9346cd2nwwy94y3hccqmr2ww"))))

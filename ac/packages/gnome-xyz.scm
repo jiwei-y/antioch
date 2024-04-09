@@ -51,7 +51,7 @@
             (commit version)))
         (file-name (git-file-name name version))
         (sha256
-          ; git clone -b 2023-10-20 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/Orchis-theme && guix hash --serializer=nar -x /tmp/Orchis-theme && rm -rf /tmp/Orchis-theme
+          ; git clone -b 2023-10-20 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/ac/Orchis-theme && guix hash --serializer=nar -x /tmp/ac/Orchis-theme && rm -rf /tmp/ac/Orchis-theme
           (base32
            "0aimqq7fkc550w1k7nmc9mf68zi5diprp38jbwpb1ggfsr7b650s"))
         (modules '((guix build utils)

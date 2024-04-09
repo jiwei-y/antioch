@@ -42,7 +42,7 @@
                     "https://github.com/mike-fabian/ibus-typing-booster/releases/download/"
                     version "/ibus-typing-booster-" version ".tar.gz"))
               (sha256
-               ;; guix download https://github.com/mike-fabian/ibus-typing-booster/releases/download/2.24.4/ibus-typing-booster-2.24.4.tar.gz -o /tmp/ibus-typing-booster-2.24.4.tar.gz && rm -rf /tmp/ibus-typing-booster-2.24.4.tar.gz
+               ;; guix download https://github.com/mike-fabian/ibus-typing-booster/releases/download/2.24.4/ibus-typing-booster-2.24.4.tar.gz -o /tmp/ac/ibus-typing-booster-2.24.4.tar.gz && rm -rf /tmp/ac/ibus-typing-booster-2.24.4.tar.gz
                (base32
                 "1a8mbjs1k1mf6y17pgrypmm2sl3dchymhll4zbpqk54ih34gga6p"))))
     (build-system glib-or-gtk-build-system)
@@ -129,7 +129,7 @@ Recently the capability to type different languages at the same time without hav
                     (commit "cde23396637d4fffa2b35774892ae10fc0156b5f")
                     (recursive? #t)))
               (sha256
-               ;; git clone --depth 1 --recurse-submodules https://github.com/google/mozc /tmp/mozc && guix hash --serializer=nar -x /tmp/mozc && rm -rf /tmp/mozc
+               ;; git clone --depth 1 --recurse-submodules https://github.com/google/mozc /tmp/ac/mozc && guix hash --serializer=nar -x /tmp/ac/mozc && rm -rf /tmp/ac/mozc
                (base32 "073c1mnpn1lj6i0h0qryivjcc895yx8vnc0iap49bxyw1m74a45d"))))
     (build-system python-build-system)
     (arguments
@@ -326,7 +326,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "01490262fe58576b4356734468c973bc46acdd33")))
            (file-name "mozcdic-ext")
            (sha256
-             ;; git clone --depth 1 https://github.com/reasonset/mozcdict-ext /tmp/mozcdic-ext && guix hash  --serializer=nar -x /tmp/mozcdic-ext && rm -rf /tmp/mozcdic-ext
+             ;; git clone --depth 1 https://github.com/reasonset/mozcdict-ext /tmp/ac/mozcdic-ext && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ext && rm -rf /tmp/ac/mozcdic-ext
              (base32
                "17463m3rnfgmj6yndym4avhnjpk0ivr1kmbfdawga6j1fq0m5468"))))
        ("merge-ut-dictionaries"
@@ -337,7 +337,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "c4daa91f69ee6d45eaec510cbaa58075d29ba820")))
            (file-name "merge-ut-dictionaries")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/merge-ut-dictionaries /tmp/merge-ut-dictionaries &&  guix hash --serializer=nar -x /tmp/merge-ut-dictionaries && rm -rf /tmp/merge-ut-dictionaries
+             ;; git clone --depth 1 https://github.com/utuhiro78/merge-ut-dictionaries /tmp/ac/merge-ut-dictionaries &&  guix hash --serializer=nar -x /tmp/ac/merge-ut-dictionaries && rm -rf /tmp/ac/merge-ut-dictionaries
              (base32
                "0ck0hc93z5v3vp8dqymczgpfvcw0pym0npxlixhazrv91dyrcy56"))))
        ("mozcdic-ut-alt-cannadic"
@@ -348,7 +348,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "f59287e569db3e226378380a34e71275654b46d0")))
            (file-name "mozcdic-ut-alt-cannadic")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-alt-cannadic /tmp/mozcdic-ut-alt-cannadic && guix hash --serializer=nar -x /tmp/mozcdic-ut-alt-cannadic && rm -rf /tmp/mozcdic-ut-alt-cannadic
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-alt-cannadic /tmp/ac/mozcdic-ut-alt-cannadic && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-alt-cannadic && rm -rf /tmp/ac/mozcdic-ut-alt-cannadic
              (base32
                "1rmiahhrc8gmcsa2y5agchaw3pkfiajh3pl2q3r1c0s6d6c3mmbb"))))
        ("mozcdic-ut-edict2"
@@ -359,7 +359,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "b976b6720a9ce38bea26b457af4678ab3d76b971")))
            (file-name "mozcdic-ut-edict2")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-edict2 /tmp/mozcdic-ut-edict2 && guix hash  --serializer=nar -x /tmp/mozcdic-ut-edict2 && rm -rf /tmp/mozcdic-ut-edict2
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-edict2 /tmp/ac/mozcdic-ut-edict2 && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-edict2 && rm -rf /tmp/ac/mozcdic-ut-edict2
              (base32
                "0aayj1ydav3p6bajjd85gd7jzdx724kq4565njf9966slnv19z8f"))))
        ("mozcdic-ut-jawiki"
@@ -370,7 +370,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "25d82b3def00c3d8b5ccff660952d317a8f5c6c6")))
            (file-name "mozcdic-ut-jawiki")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-jawiki /tmp/mozcdic-ut-jawiki && guix hash  --serializer=nar -x /tmp/mozcdic-ut-jawiki && rm -rf /tmp/mozcdic-ut-jawiki
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-jawiki /tmp/ac/mozcdic-ut-jawiki && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-jawiki && rm -rf /tmp/ac/mozcdic-ut-jawiki
              (base32
                "0z37s5gdsnk8rf6mfg3p3kn50svny6mxs9mzw6acbb6zsawx5qkr"))))
        ("mozcdic-ut-neologd"
@@ -381,7 +381,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "90e59c7707a5fe250c992c10c6ceb08a7ce7e652")))
            (file-name "mozcdic-ut-neologd")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-neologd /tmp/mozcdic-ut-neologd && guix  hash --serializer=nar -x /tmp/mozcdic-ut-neologd && rm -rf /tmp/mozcdic-ut-neologd
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-neologd /tmp/ac/mozcdic-ut-neologd && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-neologd && rm -rf /tmp/ac/mozcdic-ut-neologd
              (base32
                "04d3z9sbrrxvb8qp670n99mfl4zk5igb1z5q3v819k0fkvycm3nd"))))
        ("mozcdic-ut-personal-names"
@@ -392,7 +392,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "c96f2a22aaf2bddcca0dcb0b028ed6c7188f6e17")))
            (file-name "mozcdic-ut-personal-names")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-personal-names /tmp/mozcdic-ut-personal-names && guix hash --serializer=nar -x /tmp/mozcdic-ut-personal-names && rm -rf /tmp/mozcdic-ut-personal-names
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-personal-names /tmp/ac/mozcdic-ut-personal-names && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-personal-names && rm -rf /tmp/ac/mozcdic-ut-personal-names
              (base32
                "11b586adhjfrzf986rjd61k5nwnqz4py6qania02x220lssyibpv"))))
        ("mozcdic-ut-place-names"
@@ -403,7 +403,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "754722f01544c06a6bb5bb590e704d86334dc6b1")))
            (file-name "mozcdic-ut-place-names")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-place-names /tmp/mozcdic-ut-place-names &&  guix hash --serializer=nar -x /tmp/mozcdic-ut-place-names && rm -rf /tmp/mozcdic-ut-place-names
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-place-names /tmp/ac/mozcdic-ut-place-names &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-place-names && rm -rf /tmp/ac/mozcdic-ut-place-names
              (base32
                "1qgdh9vxwcsgpy32svyrz2m1hfi1g55rky71g2px7jxbam2p0y2g"))))
        ("mozcdic-ut-skk-jisyo"
@@ -414,7 +414,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "43518e6ea033681580a515281668c85eb74a5b14")))
            (file-name "mozcdic-ut-skk-jisyo")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-skk-jisyo /tmp/mozcdic-ut-skk-jisyo && guix  hash --serializer=nar -x /tmp/mozcdic-ut-skk-jisyo && rm -rf /tmp/mozcdic-ut-skk-jisyo
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-skk-jisyo /tmp/ac/mozcdic-ut-skk-jisyo && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-skk-jisyo && rm -rf /tmp/ac/mozcdic-ut-skk-jisyo
              (base32
                "0idr6zdlkg01vybisf1kd3q2kxpgpi0kipd373pr2jvcx7zgz56k"))))
        ("mozcdic-ut-sudachidict"
@@ -425,7 +425,7 @@ Recently the capability to type different languages at the same time without hav
                  (commit "39c8c2c16b326a5d9ba63a9d2f13032533ae1634")))
            (file-name "mozcdic-ut-sudachidict")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-sudachidict /tmp/mozcdic-ut-sudachidict &&  guix hash --serializer=nar -x /tmp/mozcdic-ut-sudachidict && rm -rf /tmp/mozcdic-ut-sudachidict
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-sudachidict /tmp/ac/mozcdic-ut-sudachidict &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-sudachidict && rm -rf /tmp/ac/mozcdic-ut-sudachidict
              (base32
                "0ns4alj8pfprp6bncngss94swsrgxxi7zqa05zw34qg6sjch2gbm"))))
        ("jawiki-titles"
@@ -434,7 +434,7 @@ Recently the capability to type different languages at the same time without hav
            (uri "https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz")
            (file-name "jawiki-latest-all-titles-in-ns0.gz")
            (sha256
-             ;; guix download https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz -o /tmp/jawiki-latest-all-titles-in-ns0.gz && rm -rf /tmp/jawiki-latest-all-titles-in-ns0.gz
+             ;; guix download https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz -o /tmp/ac/jawiki-latest-all-titles-in-ns0.gz && rm -rf /tmp/ac/jawiki-latest-all-titles-in-ns0.gz
              (base32
                "0l0vx44n7ns0ir273faj51cfp83nsnxqnlxj7yw1cmdxdlsi0zab"))))))
     (native-inputs

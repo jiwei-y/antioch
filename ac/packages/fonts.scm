@@ -42,7 +42,7 @@
              (commit (string-append "noto-monthly-release-" version))))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone -b noto-monthly-release-24.2.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/noto && guix hash --serializer=nar -x /tmp/noto && rm -rf /tmp/noto
+        ;; git clone -b noto-monthly-release-24.2.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/ac/noto && guix hash --serializer=nar -x /tmp/ac/noto && rm -rf /tmp/ac/noto
         (base32 "087jg8ahpq35xwyrmvm9ivxl0wjic2j4r28bbrwqmgdva9brms40"))))
       (arguments
       `(#:phases
@@ -94,7 +94,7 @@
        (method url-fetch)
        (uri (string-append
              ;; https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/00_NotoSansCJK.ttc.zip
-             ;; guix download https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/00_NotoSansCJK.ttc.zip -o /tmp/00_NotoSansCJK.ttc.zip && rm -rf /tmp/00_NotoSansCJK.ttc.zip
+             ;; guix download https://github.com/notofonts/noto-cjk/releases/download/Sans2.004/00_NotoSansCJK.ttc.zip -o /tmp/ac/00_NotoSansCJK.ttc.zip && rm -rf /tmp/ac/00_NotoSansCJK.ttc.zip
              "https://github.com/googlefonts/noto-cjk/releases/download/Sans"
              version "/00_NotoSansCJK.ttc.zip"))
        (file-name (string-append name "-" version ".zip"))
@@ -111,7 +111,7 @@
        (method url-fetch)
        (uri (string-append
              ;; https://github.com/googlefonts/noto-cjk/releases/download/Serif2.002/01_NotoSerifCJK.ttc.zip
-             ;; guix download https://github.com/googlefonts/noto-cjk/releases/download/Serif2.002/01_NotoSerifCJK.ttc.zip -o /tmp/01_NotoSerifCJK.ttc.zip && rm -rf /tmp/01_NotoSerifCJK.ttc.zip
+             ;; guix download https://github.com/googlefonts/noto-cjk/releases/download/Serif2.002/01_NotoSerifCJK.ttc.zip -o /tmp/ac/01_NotoSerifCJK.ttc.zip && rm -rf /tmp/ac/01_NotoSerifCJK.ttc.zip
              "https://github.com/googlefonts/noto-cjk/releases/download/Serif"
              version "/01_NotoSerifCJK.ttc.zip"))
        (file-name (string-append name "-" version ".zip"))
@@ -131,7 +131,7 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone -b v2.042 --depth 1 https://github.com/googlefonts/noto-emoji /tmp/noto-emoji && guix hash --serializer=nar -x /tmp/noto-emoji && rm -rf /tmp/noto-emoji
+        ;; git clone -b v2.042 --depth 1 https://github.com/googlefonts/noto-emoji /tmp/ac/noto-emoji && guix hash --serializer=nar -x /tmp/ac/noto-emoji && rm -rf /tmp/ac/noto-emoji
         (base32
          "17i7awyqz9jv0j2blcf0smmpas375c3pdhjv1zqzl861g8qm1lm2"))))))
 

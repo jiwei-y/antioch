@@ -26,7 +26,7 @@
               (commit (string-append "V" version))))
         (file-name (git-file-name name version))
         (sha256
-         ; git clone -b V1.0.10 --depth 1 https://github.com/tsujan/Kvantum /tmp/Kvantum && guix hash --serializer=nar -x /tmp/Kvantum && rm -rf /tmp/Kvantum
+         ; git clone -b V1.0.10 --depth 1 https://github.com/tsujan/Kvantum /tmp/ac/Kvantum && guix hash --serializer=nar -x /tmp/ac/Kvantum && rm -rf /tmp/ac/Kvantum
          (base32 "06nxrjwz7d8pqgm4bcqp0j5ryx45d5dp7d5192bvj71aiy56bh73"))))
     (build-system qt-build-system)
     (arguments

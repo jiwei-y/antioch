@@ -78,9 +78,9 @@
              (commit (string-append "v" version))))
        (file-name (git-file-name name version))
        (sha256
-        ; git clone -b v0.10.3 --depth 1 https://github.com/openSUSE/snapper /tmp/snapper
-        ; guix hash --serializer=nar -x /tmp/snapper
-        ; rm -rf /tmp/snapper
+        ; git clone -b v0.10.3 --depth 1 https://github.com/openSUSE/snapper /tmp/ac/snapper
+        ; guix hash --serializer=nar -x /tmp/ac/snapper
+        ; rm -rf /tmp/ac/snapper
         (base32 "17g02vfjj3w38mssmf1mcpjrxlpkzfd4inh80minl1wlsbjr4bd6"))
        (modules '((guix build utils)))
        (snippet
