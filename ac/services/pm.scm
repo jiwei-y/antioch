@@ -69,7 +69,7 @@
 
 (define-configuration tlp-configuration
   (tlp
-   (file-like tlp-git)      ; modified
+   (file-like tlp-stable)      ; modified
    "The TLP package.")
 
   (tlp-enable?
