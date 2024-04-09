@@ -39,61 +39,61 @@
 (define config->string
   (@@ (gnu packages linux) config->string))
 
-(define-public upstream-version "6.7.7")
+(define-public upstream-version "6.8.4")
 (define-public upstream-major-version
   (version-major+minor upstream-version))
-(define-public xanmod-hardened-version  "6.7.7")
-(define-public xanmod-version "6.7.7")
+(define-public xanmod-hardened-version  "6.8.4")
+(define-public xanmod-version "6.8.4")
 (define-public xanmod-revision "xanmod1")
-(define-public hardened-version "6.7.7")
+(define-public hardened-version "6.8.4")
 (define-public hardened-revision "hardened1")
 
 (define-public linux-pristine-source
   (let ((version upstream-major-version)
-        ;; mirror://kernel.org/linux/kernel/v6.x/linux-6.7.tar.xz
-        ;; guix download https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.7.tar.xz -o /tmp/linux-6.7.tar.xz && rm -rf /tmp/linux-6.7.tar.xz
-        (hash (base32 "0s8hbcsg7fdvspqam8kzcxygjsznr4zfi60nqgc81l3n4m518cgg")))
+        ;; mirror://kernel.org/linux/kernel/v6.x/linux-6.8.tar.xz
+        ;; guix download https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.8.tar.xz -o /tmp/ac/linux-6.8.tar.xz && rm -rf /tmp/ac/linux-6.8.tar.xz
+        (hash (base32 "1wv5x7qhcd05m8m0myyqm2il6mha1sx11h7ppf8yjsxvx2jdwsf9")))
     (%upstream-linux-source version hash)))
 
 (define %xanmod-patch-main
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.7.7-xanmod1/patch-6.7.7-xanmod1.xz -o /tmp/6.7.7-xanmod1.xz && rm -rf /tmp/6.7.7-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.8.4-xanmod1/patch-6.8.4-xanmod1.xz -o /tmp/ac/6.8.4-xanmod1.xz && rm -rf /tmp/ac/6.8.4-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/main/" xanmod-version "-" xanmod-revision
                         "/patch-" xanmod-version "-" xanmod-revision ".xz"))
     (sha256 (base32
-             "1g7sc1ri96mavdm1v4jz70jgapgkmdi881lh9bgzzvhgpbk65y0v"))))
+             "0jas8mn37nagd8k6qhywfch8mv7n083nzaw6kwdfiwamjccw7r5g"))))
 
 (define %xanmod-patch-edge
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.7.7-xanmod1/patch-6.7.7-xanmod1.xz -o /tmp/6.7.7-xanmod1.xz && rm -rf /tmp/6.7.7-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.8.4-xanmod1/patch-6.8.4-xanmod1.xz -o /tmp/ac/6.8.4-xanmod1.xz && rm -rf /tmp/ac/6.8.4-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/edge/" xanmod-version "-" xanmod-revision
                         "/patch-" xanmod-version "-" xanmod-revision ".xz"))
     (sha256 (base32
-             "0502n2lw590f61vvvvr1lcrmlv01b4cdryxynb847jh1lgqk81aw"))))
+             "0jas8mn37nagd8k6qhywfch8mv7n083nzaw6kwdfiwamjccw7r5g"))))
 
 (define %hardened-patch
   (origin
     (method url-fetch)
-    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.7-hardened1/linux-hardened-6.7.7-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.7.7-hardened1.patch 
+    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.8.4-hardened1/linux-hardened-6.8.4-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.8.4-hardened1.patch 
     (file-name (string-append "linux-" hardened-version "-" hardened-revision ".patch"))
     (uri (string-append
           "https://github.com/anthraxx/linux-hardened/releases/download/"
           hardened-version "-" hardened-revision "/linux-hardened-" hardened-version "-" hardened-revision ".patch"))
     (sha256 (base32
-             "1hixrbd678fg803wrwziyry8w1arb7kgcwx41ghm1sp85afkw7w6"))))
+             "0jgax2x3qicic8r8dm6bfzh0r6v1xxrzdfycw4wgg7m12d0imxbl"))))
 
 ; (define %adjusted-hardened-patch
 ;   (let* ((version hardened-version)
 ;          (patch (string-append "linux-" version ".patch"))
 ;          (source (origin
 ;                    (method url-fetch)
-;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.7.7-hardened1/linux-hardened-6.7.7-hardened1.patch -o /tmp/linux-6.7.7-hardened1.patch
+;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.8.4-hardened1/linux-hardened-6.8.4-hardened1.patch -o /tmp/ac/linux-6.8.4-hardened1.patch
 ;                    (uri (string-append
 ;                          "https://github.com/anthraxx/linux-hardened/releases/download/"
 ;                          version "/linux-hardened-" version ".patch"))
@@ -124,11 +124,11 @@
   (origin
     (inherit (source-with-patches
               linux-pristine-source
-              (list %xanmod-patch-main
-                    ;%xanmod-patch-edge
+              (list ;%xanmod-patch-main
+                    %xanmod-patch-edge
                     ;%hardened-patch
                     ;; find ".procname	= "unprivileged_userns_clone",", delete that trunk
-                    (local-file "patches/linux-6.7.7-hardened1.patch"))))
+                    (local-file "patches/linux-6.8.4-hardened1.patch"))))
     (modules '((guix build utils)))))
 
 ;(define-public xanmod-source
@@ -157,7 +157,7 @@
 
 ;(define %khc-extra-linux-options
 ;  `(  ;; kernel-hardening-checker (remember to apply the configs in the comments)
-;      ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.7/CONFIGS/;xanmod/gcc/config_x86-64-v3
+;      ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.8/CONFIGS/;xanmod/gcc/config_x86-64-v3
 ;      ;; kernel-hardening-checker -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v3
 ;      ;; CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY MUST be not set
 ;
@@ -391,7 +391,7 @@
                     ;; https://github.com/lkrg-org/lkrg/commits/main
               (file-name (git-file-name name version))
               (sha256
-               ; git clone --depth 1 https://github.com/lkrg-org/lkrg /tmp/lkrg && guix hash --serializer=nar -x /tmp/lkrg && rm -rf /tmp/lkrg
+               ; git clone --depth 1 https://github.com/lkrg-org/lkrg /tmp/ac/lkrg && guix hash --serializer=nar -x /tmp/ac/lkrg
                (base32
                 "1wnzlbwrvg19v45sc8lbjvyha2554m21qpdx916dg7v2hbdgzkr1"))))
     (arguments
@@ -427,7 +427,7 @@
                     (commit (string-append "v" version))))
               (file-name (git-file-name name version))
               (sha256
-               ; git clone -b v0.9.8 --depth 1 https://github.com/lkrg-org/lkrg /tmp/lkrg && guix hash --serializer=nar -x /tmp/lkrg && rm -rf /tmp/lkrg
+               ; git clone -b v0.9.8 --depth 1 https://github.com/lkrg-org/lkrg /tmp/ac/lkrg && guix hash --serializer=nar -x /tmp/ac/lkrg
                (base32
                 "0vwsbp57bsp3fj4kap791vj7swqpkb4jv18w8dcizp4dxnl4lvrp"))))))
 
@@ -435,18 +435,18 @@
   (package
     (inherit kconfig-hardened-check)
     (name "kernel-hardening-checker-git")
-    (version "20240219")
+    (version "20240330")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/a13xp0p0v/kernel-hardening-checker")
              ; https://github.com/a13xp0p0v/kernel-hardening-checker/commits/master
-             (commit "31352cfaebcf88a4cf39ab41396182f61e0a0ab6")))
+             (commit "74963559e760568c1d4b11e4c120e792efd428e4")))
        (file-name (git-file-name name version))
        (sha256
-        ; git clone --depth 1 https://github.com/a13xp0p0v/kernel-hardening-checker /tmp/kernel-hardening-checker && guix hash --serializer=nar -x /tmp/kernel-hardening-checker && rm -rf /tmp/kernel-hardening-checker
-        (base32 "1sqvhswc734gj7lw7bh8nik61s51ifx3g292i612gcyqp2lrdsms"))))
+        ; git clone --depth 1 https://github.com/a13xp0p0v/kernel-hardening-checker /tmp/ac/kernel-hardening-checker && guix hash --serializer=nar -x /tmp/ac/kernel-hardening-checker
+        (base32 "15jijf28a2qbpcz7znkaraxygz2g69yaqv0cnpwrrzp7w2cvdd94"))))
     (license gpl3)))
 
 (define-public tlp-git
@@ -462,7 +462,7 @@
              (commit "3a12e12fd2bea8e7662c3dd7b646e124f8c60168")))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone --depth 1 https://github.com/linrunner/TLP /tmp/TLP && guix hash --serializer=nar -x /tmp/TLP && rm -rf /tmp/TLP
+        ;; git clone --depth 1 https://github.com/linrunner/TLP /tmp/ac/TLP && guix hash --serializer=nar -x /tmp/ac/TLP && rm -rf /tmp/ac/TLP
         (base32 "1gyhx1i2z2yipgpnjylmspzhv2cxmf5f0rx9si9l28zpjwan3g2y"))))
     (arguments
         (substitute-keyword-arguments (package-arguments tlp)
@@ -489,7 +489,7 @@
              (commit version)))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone -b 1.6.1 --depth 1 https://github.com/linrunner/TLP /tmp/TLP && guix hash --serializer=nar -x /tmp/TLP && rm -rf /tmp/TLP
+        ;; git clone -b 1.6.1 --depth 1 https://github.com/linrunner/TLP /tmp/ac/TLP && guix hash --serializer=nar -x /tmp/ac/TLP && rm -rf /tmp/ac/TLP
         (base32 "0ybhcpx5vap4pv9j2id84xrg2c5nlzljiqyb1zww9sn59qlva4qb"))))
     (arguments
         (substitute-keyword-arguments (package-arguments tlp)
@@ -515,9 +515,9 @@
                 (commit (string-append "v" version))))
               (file-name (git-file-name name version))
               (sha256
-               ; git clone -b v3.1.1 --depth 1 https://github.com/tuxedocomputers/tuxedo-keyboard /tmp/tuxedo-keyboard
-               ; guix hash --serializer=nar -x /tmp/tuxedo-keyboard
-               ; rm -rf /tmp/tuxedo-keyboard
+               ; git clone -b v3.1.1 --depth 1 https://github.com/tuxedocomputers/tuxedo-keyboard /tmp/ac/tuxedo-keyboard
+               ; guix hash --serializer=nar -x /tmp/ac/tuxedo-keyboard
+               ; rm -rf /tmp/ac/tuxedo-keyboard
                (base32
                 "17n14yh55yrxx4qbx4ph9drbzx2ll4kdsfmlngrdgizhyzk7z7zv"))))
     (build-system linux-module-build-system)
