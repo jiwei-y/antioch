@@ -33,7 +33,7 @@
   (package
     (inherit font-google-noto)
     (name "font-google-noto-git")
-    (version "24.2.1")
+    (version "24.4.1")
     (source
      (origin
        (method git-fetch)
@@ -42,47 +42,8 @@
              (commit (string-append "noto-monthly-release-" version))))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone -b noto-monthly-release-24.2.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/ac/noto && guix hash --serializer=nar -x /tmp/ac/noto && rm -rf /tmp/ac/noto
-        (base32 "087jg8ahpq35xwyrmvm9ivxl0wjic2j4r28bbrwqmgdva9brms40"))))
-      (arguments
-      `(#:phases
-        (modify-phases %standard-phases
-          (replace 'install
-            (lambda* (#:key outputs #:allow-other-keys)
-              (let* ((out (assoc-ref outputs "out"))
-                     (font-dir (string-append out "/share/fonts")))
-                (for-each (lambda (notofont)
-                            (with-directory-excursion notofont
-                              (if (directory-exists? "full")
-                                  (for-each (lambda (fulldir)   ;; check availability in order of variable -> otf -> ttf
-                                              (with-directory-excursion fulldir
-                                                (if (directory-exists? "variable-ttf")
-                                                    (copy-recursively "variable-ttf" font-dir)
-                                                    (if (directory-exists? "otf")
-                                                        (copy-recursively "otf" font-dir)
-                                                        (copy-recursively "ttf" font-dir)))))
-                                            (find-files "." "full" #:directories? #t)) ;; searching /full in current Noto font folder
-                                  (if (directory-exists? "googlefonts")
-                                      (for-each (lambda (googledir)   ;; check availability in order of variable -> otf -> ttf
-                                                  (with-directory-excursion googledir
-                                                    (if (directory-exists? "variable-ttf")
-                                                        (copy-recursively "variable-ttf" font-dir)
-                                                        (if (directory-exists? "otf")
-                                                            (copy-recursively "otf" font-dir)
-                                                            (copy-recursively "ttf" font-dir)))))
-                                                (find-files "." "googlefonts" #:directories? #t))
-                                      (if (directory-exists? "unhinted")
-                                          (for-each (lambda (unhinteddir)   ;; check availability in order of variable -> otf -> ttf
-                                                      (with-directory-excursion unhinteddir
-                                                        (if (directory-exists? "variable-ttf")
-                                                            (copy-recursively "variable-ttf" font-dir)
-                                                            (if (directory-exists? "otf")
-                                                                (copy-recursively "otf" font-dir)
-                                                                (copy-recursively "ttf" font-dir)))))
-                                                    (find-files "." "unhinted" #:directories? #t))))))) ;; searching /unhinted in current Noto font folder
-                          (filter directory-exists?
-                            (find-files "fonts" "Noto" #:directories? #t))) ;; searching all Noto fonts folders
-                #t))))))))
+        ;; git clone -b noto-monthly-release-24.4.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/ac/noto && guix hash --serializer=nar -x /tmp/ac/noto && rm -rf /tmp/ac/noto
+        (base32 "1lm9brd61dsmjpr40s4iznqjqpz9giayfyfhyzxnnxzcj5lqjfgv"))))))
 
 (define-public font-google-noto-sans-cjk-superotc
   (package
@@ -134,4 +95,3 @@
         ;; git clone -b v2.042 --depth 1 https://github.com/googlefonts/noto-emoji /tmp/ac/noto-emoji && guix hash --serializer=nar -x /tmp/ac/noto-emoji && rm -rf /tmp/ac/noto-emoji
         (base32
          "17i7awyqz9jv0j2blcf0smmpas375c3pdhjv1zqzl861g8qm1lm2"))))))
-
