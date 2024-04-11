@@ -283,7 +283,9 @@
       ("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #f)
       ("CONFIG_MODULE_SIG_FORCE" . #f)
       ("CONFIG_HIBERNATION" . #t)
-      ;; LKRG requires these:
+      ("CONFIG_DRM_XE" . #f)  ;; temporary solution to https://lkml.org/lkml/2024/1/24/1138
+      
+      ;; Required by LKRG:
       ("CONFIG_KALLSYMS" . #t)
       ("CONFIG_KPROBES" . #t)
       ("CONFIG_TRIM_UNUSED_KSYMS" . #f)   ;; required if lkrg should be built as an out-of-tree kernel module
