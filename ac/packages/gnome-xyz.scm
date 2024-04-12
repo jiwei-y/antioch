@@ -41,7 +41,7 @@
 (define-public orchis-theme
   (package
     (name "orchis-theme")
-    (version "2023-10-20")
+    (version "2024-04-01")
     (source
       (origin
         (method git-fetch)
@@ -51,9 +51,9 @@
             (commit version)))
         (file-name (git-file-name name version))
         (sha256
-          ; git clone -b 2023-10-20 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/ac/Orchis-theme && guix hash --serializer=nar -x /tmp/ac/Orchis-theme && rm -rf /tmp/ac/Orchis-theme
+          ; git clone -b 2024-04-01 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/ac/Orchis-theme && guix hash --serializer=nar -x /tmp/ac/Orchis-theme
           (base32
-           "0aimqq7fkc550w1k7nmc9mf68zi5diprp38jbwpb1ggfsr7b650s"))
+           "00gmrxd9jw1m9bwza0aavr6dyg7fmjjwznh99p0hm5lnj58z5k42"))
         (modules '((guix build utils)
                    (ice-9 regex)
                    (srfi srfi-26)))
