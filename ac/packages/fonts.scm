@@ -60,7 +60,8 @@
              version "/00_NotoSansCJK.ttc.zip"))
        (file-name (string-append name "-" version ".zip"))
        (sha256
-        (base32 "1z4bsdqb09srckgxzw0bri4x0arsf6r1arqybcx5z1rqc1rpfq55"))))))
+        (base32 "1z4bsdqb09srckgxzw0bri4x0arsf6r1arqybcx5z1rqc1rpfq55"))))
+    (arguments '())))
 
 (define-public font-google-noto-serif-cjk-superotc
   (package
@@ -77,7 +78,9 @@
              version "/01_NotoSerifCJK.ttc.zip"))
        (file-name (string-append name "-" version ".zip"))
        (sha256
-        (base32 "11ag68imf7crfm5035zz2fvk64bfal536vg6xrv86gc0kzm272z7"))))))
+        (base32 "11ag68imf7crfm5035zz2fvk64bfal536vg6xrv86gc0kzm272z7"))))
+    (arguments '())
+    (outputs '("out"))))
 
 (define-public font-google-noto-emoji-git
   (package
