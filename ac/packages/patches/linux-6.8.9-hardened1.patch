@@ -1,5 +1,5 @@
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index d2150bd3acc5..3eb8748cfaa5 100644
+index 31fdaf4fe9dd..6aa88aeb61f4 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -601,17 +601,6 @@
@@ -20,7 +20,7 @@ index d2150bd3acc5..3eb8748cfaa5 100644
  	cio_ignore=	[S390]
  			See Documentation/arch/s390/common_io.rst for details.
  
-@@ -4330,6 +4319,11 @@
+@@ -4331,6 +4320,11 @@
  			the specified number of seconds.  This is to be used if
  			your oopses keep scrolling off the screen.
  
@@ -102,23 +102,23 @@ index 7afff42612e9..af3a017de419 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index c436247d750c..b9b9a625a43a 100644
+index 2917a6914c03..9cb0a61ef823 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 8
- SUBLEVEL = 4
+ SUBLEVEL = 9
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
  
  # *DOCUMENTATION*
 diff --git a/arch/Kconfig b/arch/Kconfig
-index a5af0edd3eb8..63bd8bffea32 100644
+index 03cd763ed40c..e88a612a7084 100644
 --- a/arch/Kconfig
 +++ b/arch/Kconfig
-@@ -1025,7 +1025,7 @@ config ARCH_MMAP_RND_BITS
+@@ -1033,7 +1033,7 @@ config ARCH_MMAP_RND_BITS
  	int "Number of bits to use for ASLR of mmap base address" if EXPERT
  	range ARCH_MMAP_RND_BITS_MIN ARCH_MMAP_RND_BITS_MAX
  	default ARCH_MMAP_RND_BITS_DEFAULT if ARCH_MMAP_RND_BITS_DEFAULT
@@ -127,7 +127,7 @@ index a5af0edd3eb8..63bd8bffea32 100644
  	depends on HAVE_ARCH_MMAP_RND_BITS
  	help
  	  This value can be used to select the number of bits to use to
-@@ -1059,7 +1059,7 @@ config ARCH_MMAP_RND_COMPAT_BITS
+@@ -1067,7 +1067,7 @@ config ARCH_MMAP_RND_COMPAT_BITS
  	int "Number of bits to use for ASLR of mmap base address for compatible applications" if EXPERT
  	range ARCH_MMAP_RND_COMPAT_BITS_MIN ARCH_MMAP_RND_COMPAT_BITS_MAX
  	default ARCH_MMAP_RND_COMPAT_BITS_DEFAULT if ARCH_MMAP_RND_COMPAT_BITS_DEFAULT
@@ -136,7 +136,7 @@ index a5af0edd3eb8..63bd8bffea32 100644
  	depends on HAVE_ARCH_MMAP_RND_COMPAT_BITS
  	help
  	  This value can be used to select the number of bits to use to
-@@ -1273,6 +1273,7 @@ config RANDOMIZE_KSTACK_OFFSET
+@@ -1281,6 +1281,7 @@ config RANDOMIZE_KSTACK_OFFSET
  config RANDOMIZE_KSTACK_OFFSET_DEFAULT
  	bool "Default state of kernel stack offset randomization"
  	depends on RANDOMIZE_KSTACK_OFFSET
@@ -209,10 +209,10 @@ index 97932fbf973d..40c6468c093a 100644
  
  #ifdef __AARCH64EB__
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 184730705650..61f67aa57611 100644
+index 6f49999a6b83..19caf5530a13 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
-@@ -1223,8 +1223,7 @@ config VM86
+@@ -1224,8 +1224,7 @@ config VM86
  	default X86_LEGACY_VM86
  
  config X86_16BIT
@@ -222,7 +222,7 @@ index 184730705650..61f67aa57611 100644
  	depends on MODIFY_LDT_SYSCALL
  	help
  	  This option is required by programs like Wine to run 16-bit
-@@ -2302,7 +2301,7 @@ config COMPAT_VDSO
+@@ -2303,7 +2302,7 @@ config COMPAT_VDSO
  choice
  	prompt "vsyscall table for legacy applications"
  	depends on X86_64
@@ -231,7 +231,7 @@ index 184730705650..61f67aa57611 100644
  	help
  	  Legacy user code that does not know how to find the vDSO expects
  	  to be able to issue three syscalls by calling fixed addresses in
-@@ -2386,8 +2385,7 @@ config CMDLINE_OVERRIDE
+@@ -2387,8 +2386,7 @@ config CMDLINE_OVERRIDE
  	  be set to 'N' under normal conditions.
  
  config MODIFY_LDT_SYSCALL
@@ -373,7 +373,7 @@ index 25726893c6f4..cd4b5781260d 100644
  	native_write_cr4(cr4);
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 40d8c110bb32..aad5b60feb81 100644
+index 46603c6e400a..fb8470ba5f6d 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
 @@ -432,6 +432,7 @@ EXPORT_SYMBOL_GPL(native_write_cr4);
@@ -452,7 +452,7 @@ index b63403d7179d..a40bcad396d9 100644
  /* Used in PAGE_KERNEL_* macros which are reasonably used out-of-tree: */
  EXPORT_SYMBOL(__default_kernel_pte_mask);
 diff --git a/arch/x86/mm/init_64.c b/arch/x86/mm/init_64.c
-index a0dffaca6d2b..f9a0bb748a39 100644
+index 534436c9d399..aef8e70a2fc8 100644
 --- a/arch/x86/mm/init_64.c
 +++ b/arch/x86/mm/init_64.c
 @@ -104,9 +104,9 @@ static inline pgprot_t prot_sethuge(pgprot_t prot)
@@ -481,7 +481,7 @@ index 25d2f3239eb6..ac3db3f08146 100644
  	blk_complete_reqs(this_cpu_ptr(&blk_cpu_done));
  }
 diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index be3412cdb22e..23ab27b03a20 100644
+index c449d60d9bb9..3d2c5504d522 100644
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
 @@ -4800,7 +4800,7 @@ void __ata_qc_complete(struct ata_queued_cmd *qc)
@@ -1106,7 +1106,7 @@ index f6eba9652d01..f52fabd77664 100644
  #define TCP_RACK_LOSS_DETECTION  0x1 /* Use RACK to detect losses */
  #define TCP_RACK_STATIC_REO_WND  0x2 /* Use static RACK reo wnd */
 diff --git a/init/Kconfig b/init/Kconfig
-index bee58f7468c3..dc959cfd427e 100644
+index c8a155cf7209..933cd1b1a191 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -458,6 +458,7 @@ config USELIB
@@ -1179,19 +1179,19 @@ index bee58f7468c3..dc959cfd427e 100644
  	  This option enables POSIX asynchronous I/O which may by used
  	  by some high performance threaded applications. Disabling
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index adf944bb5a2f..2da6cb262d71 100644
+index dc0235ff472d..6e347cfeb3d0 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -153,7 +153,7 @@ static void io_queue_sqe(struct io_kiocb *req);
- 
+@@ -154,7 +154,7 @@ static void io_queue_sqe(struct io_kiocb *req);
  struct kmem_cache *req_cachep;
+ static struct workqueue_struct *iou_wq __ro_after_init;
  
 -static int __read_mostly sysctl_io_uring_disabled;
 +static int __read_mostly sysctl_io_uring_disabled = 1;
  static int __read_mostly sysctl_io_uring_group = -1;
  
  #ifdef CONFIG_SYSCTL
-@@ -163,8 +163,9 @@ static struct ctl_table kernel_io_uring_disabled_table[] = {
+@@ -164,8 +164,9 @@ static struct ctl_table kernel_io_uring_disabled_table[] = {
  		.data		= &sysctl_io_uring_disabled,
  		.maxlen		= sizeof(sysctl_io_uring_disabled),
  		.mode		= 0644,
@@ -1274,7 +1274,7 @@ index f0f0f71213a1..f2a813fcea86 100644
  		return err;
  
 diff --git a/kernel/fork.c b/kernel/fork.c
-index 0d944e92a43f..bc4eced5e8e5 100644
+index 3b9cdb42e757..e2be8b256a23 100644
 --- a/kernel/fork.c
 +++ b/kernel/fork.c
 @@ -82,6 +82,7 @@
@@ -1285,7 +1285,7 @@ index 0d944e92a43f..bc4eced5e8e5 100644
  #include <linux/oom.h>
  #include <linux/khugepaged.h>
  #include <linux/signalfd.h>
-@@ -2260,6 +2261,10 @@ __latent_entropy struct task_struct *copy_process(
+@@ -2261,6 +2262,10 @@ __latent_entropy struct task_struct *copy_process(
  	if ((clone_flags & (CLONE_NEWUSER|CLONE_FS)) == (CLONE_NEWUSER|CLONE_FS))
  		return ERR_PTR(-EINVAL);
  
@@ -1296,7 +1296,7 @@ index 0d944e92a43f..bc4eced5e8e5 100644
  	/*
  	 * Thread groups must share signals as well, and detached threads
  	 * can only be started up within the thread group.
-@@ -3406,6 +3411,12 @@ int ksys_unshare(unsigned long unshare_flags)
+@@ -3407,6 +3412,12 @@ int ksys_unshare(unsigned long unshare_flags)
  	if (unshare_flags & CLONE_NEWNS)
  		unshare_flags |= CLONE_FS;
  
@@ -1356,10 +1356,10 @@ index f2c10d351b59..d264618f41ec 100644
  	rcu_core();
  }
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index e2b4e0396af8..c5c2916ddf14 100644
+index aee5e7a70170..bdc95e1ccd91 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -12424,7 +12424,7 @@ static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
+@@ -12430,7 +12430,7 @@ static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
   * run_rebalance_domains is triggered when needed from the scheduler tick.
   * Also triggered for nohz idle balancing (with nohz_balancing_kick set).
   */
@@ -1764,7 +1764,7 @@ index 321ab379994f..e88003133a9c 100644
  	  Generate a warning if any W+X mappings are found at boot.
  
 diff --git a/mm/internal.h b/mm/internal.h
-index f309a010d50f..fb8723bcce0c 100644
+index c3f3e0f19115..dfb404455c45 100644
 --- a/mm/internal.h
 +++ b/mm/internal.h
 @@ -424,6 +424,9 @@ static inline struct folio *page_rmappable_folio(struct page *page)
@@ -2474,10 +2474,10 @@ index 5a6a9802583b..70890d727b88 100644
  
  unsigned long arch_mmap_rnd(void)
 diff --git a/net/core/dev.c b/net/core/dev.c
-index c9b8412f1c9d..6aaa681d2731 100644
+index c365aa06f886..bdad7868bc46 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
-@@ -5122,7 +5122,7 @@ int netif_rx(struct sk_buff *skb)
+@@ -5128,7 +5128,7 @@ int netif_rx(struct sk_buff *skb)
  }
  EXPORT_SYMBOL(netif_rx);
  
@@ -2486,7 +2486,7 @@ index c9b8412f1c9d..6aaa681d2731 100644
  {
  	struct softnet_data *sd = this_cpu_ptr(&softnet_data);
  
-@@ -6741,7 +6741,7 @@ static int napi_threaded_poll(void *data)
+@@ -6747,7 +6747,7 @@ static int napi_threaded_poll(void *data)
  	return 0;
  }
  
@@ -2604,7 +2604,7 @@ index e383cda05367..929997fb5e45 100644
  	  secure!
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 267b9a0a3abc..14a5d2bf32c1 100644
+index ce686ebf5591..0274a4e617d8 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -38,6 +38,8 @@ static bool sec_mismatch_warn_only = true;
@@ -2637,7 +2637,7 @@ index 267b9a0a3abc..14a5d2bf32c1 100644
  }
  };
  
-@@ -1047,7 +1056,13 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
+@@ -1050,7 +1059,13 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  	if (!secref_whitelist(fromsec, fromsym, tosec, tosym))
  		return;
  
@@ -2651,8 +2651,8 @@ index 267b9a0a3abc..14a5d2bf32c1 100644
 +	}
  
  	warn("%s: section mismatch in reference: %s+0x%x (section: %s) -> %s (section: %s)\n",
- 	     modname, fromsym, (unsigned int)(faddr - from->st_value), fromsec, tosym, tosec);
-@@ -1072,6 +1087,11 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
+ 	     modname, fromsym,
+@@ -1077,6 +1092,11 @@ static void default_mismatch_handler(const char *modname, struct elf_info *elf,
  		else
  			error("%s+0x%lx references non-executable section '%s'\n",
  			      fromsec, (long)faddr, tosec);
@@ -2664,7 +2664,7 @@ index 267b9a0a3abc..14a5d2bf32c1 100644
  	}
  }
  
-@@ -2188,7 +2208,7 @@ int main(int argc, char **argv)
+@@ -2193,7 +2213,7 @@ int main(int argc, char **argv)
  	LIST_HEAD(dump_lists);
  	struct dump_list *dl, *dl2;
  
@@ -2673,7 +2673,7 @@ index 267b9a0a3abc..14a5d2bf32c1 100644
  		switch (opt) {
  		case 'e':
  			external_module = true;
-@@ -2198,6 +2218,9 @@ int main(int argc, char **argv)
+@@ -2203,6 +2223,9 @@ int main(int argc, char **argv)
  			dl->file = optarg;
  			list_add_tail(&dl->list, &dump_lists);
  			break;
@@ -2683,7 +2683,7 @@ index 267b9a0a3abc..14a5d2bf32c1 100644
  		case 'M':
  			module_enabled = true;
  			break;
-@@ -2288,5 +2311,11 @@ int main(int argc, char **argv)
+@@ -2293,5 +2316,11 @@ int main(int argc, char **argv)
  		warn("suppressed %u unresolved symbol warnings because there were too many)\n",
  		     nr_unresolved - MAX_UNRESOLVED_REPORTS);
  
@@ -2861,7 +2861,7 @@ index 71e6e7079d7f..97504870ea48 100644
   * selinux_secmark_enabled - Check to see if SECMARK is currently enabled
   *
 diff --git a/security/selinux/selinuxfs.c b/security/selinux/selinuxfs.c
-index 0619a1cbbfbe..a3ae07ae5258 100644
+index 074d6c2714eb..92b7d8c310d9 100644
 --- a/security/selinux/selinuxfs.c
 +++ b/security/selinux/selinuxfs.c
 @@ -697,20 +697,12 @@ static ssize_t sel_write_checkreqprot(struct file *file, const char __user *buf,

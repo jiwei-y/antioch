@@ -121,7 +121,7 @@ Recently the capability to type different languages at the same time without hav
 (define-public ibus-mozc
   (package
     (name "ibus-mozc")
-    (version "20230426")    ;; the last version supporting ibus
+    (version "20230426")    ;; the last version supporting gyp, TODO: use bazel with guix-science
     (source (origin
               (method git-fetch)
               (uri (git-reference
@@ -153,7 +153,6 @@ Recently the capability to type different languages at the same time without hav
                                       gcc "/include/c++/x86_64-unknown-linux-gnu:"
                                       (getenv "CPLUS_INCLUDE_PATH"))))))
          (add-after 'fix-gpp 'preconfigure
-         ;; do some harden which we can't do in extra options
            (lambda* (#:key inputs #:allow-other-keys)
              (substitute* "src/gyp/common.gypi"
                (("-lc++") 
