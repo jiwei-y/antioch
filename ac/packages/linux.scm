@@ -88,38 +88,6 @@
     (sha256 (base32
              "115d1fgddfcffmfg5f31w50lf2cskkwakngb343didrwfa28nrxf"))))
 
-; (define %adjusted-hardened-patch
-;   (let* ((version hardened-version)
-;          (patch (string-append "linux-" version ".patch"))
-;          (source (origin
-;                    (method url-fetch)
-;                    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/6.8.9-hardened1/linux-hardened-6.8.9-hardened1.patch -o /tmp/ac/linux-6.8.9-hardened1.patch
-;                    (uri (string-append
-;                          "https://github.com/anthraxx/linux-hardened/releases/download/"
-;                          version "/linux-hardened-" version ".patch"))
-;                    (sha256 (base32
-;                             "12si2gy6maxbvf252ircp94ci0ihqlxv3l9sf4xwxrs66gn3z2fa")))))
-;     (origin
-;       (method computed-origin-method)
-;       (file-name patch)
-;       (sha256 #f)
-;       (uri
-;         (delay
-;           (with-imported-modules '((guix build utils))
-;             #~(begin
-;                 (use-modules (guix build utils)
-;                              (srfi srfi-1)
-;                              (ice-9 match)
-;                              (ice-9 ftw))
-;                 (copy-file #+source #$patch)
-;                 (make-file-writable #$patch)
-;                 (chmod #$patch #o755)
-;                 (substitute* #$patch
-;                   (("SUBLEVEL = 15") "SUBLEVEL = 0")
-;                   (("EXTRAVERSION = -hardened1") "EXTRAVERSION ="))
-;                 (copy-file #$patch
-;                            #$output))))))))
-
 (define-public xanmod-hardened-source
   (origin
     (inherit (source-with-patches
@@ -146,119 +114,6 @@
 ;              (list ;; %vfio-pci-pm-patch
 ;                    %hardened-patch)))
 ;    (modules '((guix build utils)))))
-
-(define %waydroid-extra-linux-options
-  `( ;Modules required for waydroid:
-      ("CONFIG_ASHMEM" . #t)
-      ("CONFIG_ANDROID" . #t)
-      ("CONFIG_ANDROID_BINDER_IPC" . #t)
-      ("CONFIG_ANDROID_BINDERFS" . #t)
-      ("CONFIG_ANDROID_BINDER_DEVICES" . "binder,hwbinder,vndbinder")))
-
-;(define %khc-extra-linux-options
-;  `(  ;; kernel-hardening-checker (remember to apply the configs in the comments)
-;      ;; wget -O ~/all/antioch/ac/packages/aux-files/config_x86-64-v3 https://github.com/xanmod/linux/raw/6.8/CONFIGS/;xanmod/gcc/config_x86-64-v3
-;      ;; kernel-hardening-checker -m show_fail -c ~/all/antioch/ac/packages/aux-files/config_x86-64-v3
-;      ;; CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY MUST be not set
-;
-;      ;; dependencies of hardened config (UBSAN)
-;      ("CONFIG_CC_HAS_UBSAN_BOUNDS" . #t)
-;      ("CONFIG_CC_HAS_UBSAN_ARRAY_BOUNDS" . #t)
-;
-;      ("CONFIG_GCC_PLUGINS" . #t)
-;      ("CONFIG_INIT_STACK_ALL_ZERO" . #t)
-;      ("CONFIG_WERROR" . #t)
-;      ("CONFIG_X86_KERNEL_IBT" . #t)
-;      ("CONFIG_BUG_ON_DATA_CORRUPTION" . #t)
-;      ("CONFIG_DEBUG_LIST" . #t)
-;      ("CONFIG_DEBUG_VIRTUAL" . #t)
-;      ("CONFIG_DEBUG_SG" . #t)
-;      ("CONFIG_DEBUG_CREDENTIALS" . #t)
-;      ("CONFIG_DEBUG_NOTIFIERS" . #t)
-;      ("CONFIG_STATIC_USERMODEHELPER" . #t)
-;      ("CONFIG_RANDSTRUCT_FULL" . #t)
-;      ("CONFIG_RANDSTRUCT_PERFORMANCE" . #f)
-;      ("CONFIG_GCC_PLUGIN_LATENT_ENTROPY" . #t)
-;      ("CONFIG_MODULE_SIG_FORCE" . #t)
-;      ("CONFIG_INIT_ON_FREE_DEFAULT_ON" . #t)
-;      ("CONFIG_EFI_DISABLE_PCI_DMA" . #t)
-;      ("CONFIG_UBSAN_BOUNDS" . #t)
-;      ("CONFIG_UBSAN_LOCAL_BOUNDS" . #t)
-;      ("CONFIG_UBSAN_TRAP" . #t)
-;      ("CONFIG_UBSAN_SANITIZE_ALL" . #t)
-;      ("CONFIG_GCC_PLUGIN_STACKLEAK" . #t)
-;      ("CONFIG_STACKLEAK_METRICS" . #f)
-;      ("CONFIG_STACKLEAK_RUNTIME_DISABLE" . #f)
-;      ("CONFIG_CFI_CLANG" . #t)
-;      ("CONFIG_CFI_PERMISSIVE" . #f)
-;      ("CONFIG_IOMMU_DEFAULT_DMA_STRICT" . #t)
-;      ("CONFIG_INTEL_IOMMU_DEFAULT_ON" . #t)
-;      ("CONFIG_AMD_IOMMU_V2" . #t)
-;      ("CONFIG_SLAB_MERGE_DEFAULT" . #f)
-;      ("CONFIG_LIST_HARDENED" . #t)
-;      ("CONFIG_RANDOM_KMALLOC_CACHES" . #t)
-;      ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #f)
-;      ("CONFIG_SECURITY_SELINUX_DEVELOP" . #f)
-;      ;("CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY" . #t)
-;      ("CONFIG_BINFMT_MISC" . #f)
-;      ("CONFIG_INET_DIAG" . #f)
-;      ("CONFIG_KEXEC" . #f)
-;      ("CONFIG_PROC_KCORE" . #f)
-;      ("CONFIG_LEGACY_PTYS" . #f)
-;      ("CONFIG_HIBERNATION" . #f)
-;      ("CONFIG_COMPAT" . #f)
-;      ("CONFIG_IA32_EMULATION" . #f)
-;      ("CONFIG_MODIFY_LDT_SYSCALL" . #f)
-;      ("CONFIG_X86_MSR" . #f)
-;      ("CONFIG_LEGACY_TIOCSTI" . #f)
-;      ("CONFIG_MODULES" . #f)
-;      ("CONFIG_DEVMEM" . #f)
-;      ("CONFIG_IO_STRICT_DEVMEM" . #t)
-;      ("CONFIG_LDISC_AUTOLOAD" . #f)
-;      ("CONFIG_X86_VSYSCALL_EMULATION" . #f)
-;      ("CONFIG_PROC_VMCORE" . #f)
-;      ("CONFIG_PROC_PAGE_MONITOR" . #f)
-;      ("CONFIG_USELIB" . #f)
-;      ("CONFIG_CHECKPOINT_RESTORE" . #f)
-;      ("CONFIG_USERFAULTFD" . #f)
-;      ("CONFIG_HWPOISON_INJECT" . #f)
-;      ("CONFIG_MEM_SOFT_DIRTY" . #f)
-;      ("CONFIG_DEVPORT" . #f)
-;      ("CONFIG_DEBUG_FS" . #f)
-;      ("CONFIG_NOTIFIER_ERROR_INJECTION" . #f)
-;      ("CONFIG_PUNIT_ATOM_DEBUG" . #f)
-;      ("CONFIG_ACPI_CONFIGFS" . #f)
-;      ("CONFIG_MTD_SLRAM" . #f)
-;      ("CONFIG_MTD_PHRAM" . #f)
-;      ("CONFIG_IO_URING" . #f)
-;      ("CONFIG_KCMP" . #f)
-;      ("CONFIG_RSEQ" . #f)
-;      ("CONFIG_SUNRPC_DEBUG" . #f)
-;      ("CONFIG_FB" . #f)
-;      ("CONFIG_VT" . #f)
-;      ("CONFIG_BLK_DEV_FD" . #f)
-;      ("CONFIG_STAGING" . #f)
-;      ("CONFIG_KSM" . #f)
-;      ("CONFIG_KALLSYMS" . #f)
-;      ("CONFIG_MAGIC_SYSRQ" . #f)
-;      ("CONFIG_KEXEC_FILE" . #f)
-;      ("CONFIG_USER_NS" . #f)
-;      ("CONFIG_X86_CPUID" . #f)
-;      ("CONFIG_X86_IOPL_IOPERM" . #f)
-;      ("CONFIG_ACPI_TABLE_UPGRADE" . #f)
-;      ("CONFIG_EFI_CUSTOM_SSDT_OVERLAYS" . #f)
-;      ("CONFIG_AIO" . #f)
-;      ("CONFIG_EFI_TEST" . #f)
-;      ("CONFIG_KPROBES" . #f)
-;      ("CONFIG_BPF_SYSCALL" . #f)
-;      ("CONFIG_IP_DCCP" . #f)
-;      ("CONFIG_IP_SCTP" . #f)
-;      ("CONFIG_VIDEO_VIVID" . #f)
-;      ("CONFIG_KGDB" . #f)
-;      ("CONFIG_XFS_SUPPORT_V4" . #f)
-;      ("CONFIG_TRIM_UNUSED_KSYMS" . #t)
-;      ("CONFIG_COREDUMP" . #f)
-;    ))
   
 (define %personal-extra-options
   `(  ;; kheaders module to avoid building failure
@@ -285,11 +140,11 @@
       ("CONFIG_HIBERNATION" . #t)
 
       ;; Required by LKRG:
-      ("CONFIG_KALLSYMS" . #t)
-      ("CONFIG_KPROBES" . #t)
-      ("CONFIG_TRIM_UNUSED_KSYMS" . #f)   ;; required if lkrg should be built as an out-of-tree kernel module
-      ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #t)
-      ("CONFIG_SECURITY_SELINUX_DEVELOP" . #t)
+;      ("CONFIG_KALLSYMS" . #t)
+;      ("CONFIG_KPROBES" . #t)
+;      ("CONFIG_TRIM_UNUSED_KSYMS" . #f)   ;; required if lkrg should be built as an out-of-tree kernel module
+;      ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #t)
+;      ("CONFIG_SECURITY_SELINUX_DEVELOP" . #t)
       ;; LKRG in-tree module (not supported yet)
       ;("CONFIG_SECURITY_LKRG" . #t)
 
@@ -358,7 +213,6 @@
                                                 ;; FIXME: There might be other
                                                 ;; support missing.
                                                 (append ;%waydroid-extra-linux-options
-                                                        ;%khc-extra-linux-options   ;; automated, no longer needed
                                                         %personal-extra-options
                                                         %default-extra-linux-options))))
                     (display extra-configuration port)
