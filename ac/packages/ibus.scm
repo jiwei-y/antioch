@@ -322,120 +322,120 @@ Recently the capability to type different languages at the same time without hav
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/reasonset/mozcdict-ext")
-                 (commit "01490262fe58576b4356734468c973bc46acdd33")))
+                 (commit "9a50ee1f44f8f8f6e4bb51784b0a9ce09a2d4eb0")))
            (file-name "mozcdic-ext")
            (sha256
-             ;; git clone --depth 1 https://github.com/reasonset/mozcdict-ext /tmp/ac/mozcdic-ext && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ext && rm -rf /tmp/ac/mozcdic-ext
+             ;; git clone --depth 1 https://github.com/reasonset/mozcdict-ext /tmp/ac/mozcdic-ext && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ext
              (base32
-               "17463m3rnfgmj6yndym4avhnjpk0ivr1kmbfdawga6j1fq0m5468"))))
+               "04iigsjapcxriq87780x5mgbm7gr4al7snpl1z49sdgcxaq8fyjy"))))
        ("merge-ut-dictionaries"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/merge-ut-dictionaries")
-                 (commit "c4daa91f69ee6d45eaec510cbaa58075d29ba820")))
+                 (commit "d44c83d4bfd947fb4369e6b0c2e6111e2f9bfaba")))
            (file-name "merge-ut-dictionaries")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/merge-ut-dictionaries /tmp/ac/merge-ut-dictionaries &&  guix hash --serializer=nar -x /tmp/ac/merge-ut-dictionaries && rm -rf /tmp/ac/merge-ut-dictionaries
+             ;; git clone --depth 1 https://github.com/utuhiro78/merge-ut-dictionaries /tmp/ac/merge-ut-dictionaries &&  guix hash --serializer=nar -x /tmp/ac/merge-ut-dictionaries
              (base32
-               "0ck0hc93z5v3vp8dqymczgpfvcw0pym0npxlixhazrv91dyrcy56"))))
+               "0xac9ny4mxpp2xjbr19gm63xqk5f4m3jvv52y8g0sq9jlki3h9g6"))))
        ("mozcdic-ut-alt-cannadic"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-alt-cannadic")
-                 (commit "f59287e569db3e226378380a34e71275654b46d0")))
+                 (commit "4e548e6356b874c76e8db438bf4d8a0b452f2435")))
            (file-name "mozcdic-ut-alt-cannadic")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-alt-cannadic /tmp/ac/mozcdic-ut-alt-cannadic && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-alt-cannadic && rm -rf /tmp/ac/mozcdic-ut-alt-cannadic
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-alt-cannadic /tmp/ac/mozcdic-ut-alt-cannadic && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-alt-cannadic
              (base32
-               "1rmiahhrc8gmcsa2y5agchaw3pkfiajh3pl2q3r1c0s6d6c3mmbb"))))
+               "1rk0vkp9cka1nv44fisq7yvjs9pk5fqsjx38vqj2v148h1bfl372"))))
        ("mozcdic-ut-edict2"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-edict2")
-                 (commit "b976b6720a9ce38bea26b457af4678ab3d76b971")))
+                 (commit "4a08ebf0397c65991b5f6d7f4dd2cbc583a12c83")))
            (file-name "mozcdic-ut-edict2")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-edict2 /tmp/ac/mozcdic-ut-edict2 && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-edict2 && rm -rf /tmp/ac/mozcdic-ut-edict2
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-edict2 /tmp/ac/mozcdic-ut-edict2 && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-edict2
              (base32
-               "0aayj1ydav3p6bajjd85gd7jzdx724kq4565njf9966slnv19z8f"))))
+               "050qm1g6bp9addfp4m1m572r6gw4nlmbg3rnlacnqaj61z8jb7zp"))))
        ("mozcdic-ut-jawiki"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-jawiki")
-                 (commit "25d82b3def00c3d8b5ccff660952d317a8f5c6c6")))
+                 (commit "c5dc0ae75d65efd4603c4cf0d81a23daf9e27dbd")))
            (file-name "mozcdic-ut-jawiki")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-jawiki /tmp/ac/mozcdic-ut-jawiki && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-jawiki && rm -rf /tmp/ac/mozcdic-ut-jawiki
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-jawiki /tmp/ac/mozcdic-ut-jawiki && guix hash  --serializer=nar -x /tmp/ac/mozcdic-ut-jawiki
              (base32
-               "0z37s5gdsnk8rf6mfg3p3kn50svny6mxs9mzw6acbb6zsawx5qkr"))))
+               "02w997cn73hvmniarch9laid7fscbb0xrplzad014b0bk640rchj"))))
        ("mozcdic-ut-neologd"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-neologd")
-                 (commit "90e59c7707a5fe250c992c10c6ceb08a7ce7e652")))
+                 (commit "b0de4b90d7ddc3b837b40dc6974d6467daedc491")))
            (file-name "mozcdic-ut-neologd")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-neologd /tmp/ac/mozcdic-ut-neologd && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-neologd && rm -rf /tmp/ac/mozcdic-ut-neologd
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-neologd /tmp/ac/mozcdic-ut-neologd && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-neologd
              (base32
-               "04d3z9sbrrxvb8qp670n99mfl4zk5igb1z5q3v819k0fkvycm3nd"))))
+               "0mnhn0j65lwhk1379hjf5shwz441jjqqszm6k5s2a8s0z538cblr"))))
        ("mozcdic-ut-personal-names"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-personal-names")
-                 (commit "c96f2a22aaf2bddcca0dcb0b028ed6c7188f6e17")))
+                 (commit "1d30d6637127fd65a827dc8f52e40f1ed7af0e1d")))
            (file-name "mozcdic-ut-personal-names")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-personal-names /tmp/ac/mozcdic-ut-personal-names && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-personal-names && rm -rf /tmp/ac/mozcdic-ut-personal-names
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-personal-names /tmp/ac/mozcdic-ut-personal-names && guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-personal-names
              (base32
-               "11b586adhjfrzf986rjd61k5nwnqz4py6qania02x220lssyibpv"))))
+               "0xwi21lci1yj3lvr29yjvjrz0dfd4bn58c3shfi9190p9rddiz4q"))))
        ("mozcdic-ut-place-names"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-place-names")
-                 (commit "754722f01544c06a6bb5bb590e704d86334dc6b1")))
+                 (commit "8ddc00b0a8e0f3dc822a1008f0d62d1f59929025")))
            (file-name "mozcdic-ut-place-names")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-place-names /tmp/ac/mozcdic-ut-place-names &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-place-names && rm -rf /tmp/ac/mozcdic-ut-place-names
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-place-names /tmp/ac/mozcdic-ut-place-names &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-place-names
              (base32
-               "1qgdh9vxwcsgpy32svyrz2m1hfi1g55rky71g2px7jxbam2p0y2g"))))
+               "1kz69m6v8yfnrykqnkdzy80jmz0rchr0kr1fi3h2gcadkfjyjk4y"))))
        ("mozcdic-ut-skk-jisyo"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-skk-jisyo")
-                 (commit "43518e6ea033681580a515281668c85eb74a5b14")))
+                 (commit "5a996bfd369ee44ec681f86bb7880904e9171cdd")))
            (file-name "mozcdic-ut-skk-jisyo")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-skk-jisyo /tmp/ac/mozcdic-ut-skk-jisyo && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-skk-jisyo && rm -rf /tmp/ac/mozcdic-ut-skk-jisyo
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-skk-jisyo /tmp/ac/mozcdic-ut-skk-jisyo && guix  hash --serializer=nar -x /tmp/ac/mozcdic-ut-skk-jisyo
              (base32
-               "0idr6zdlkg01vybisf1kd3q2kxpgpi0kipd373pr2jvcx7zgz56k"))))
+               "046pki2idda0z31zmdjr623d2qvhjj0yxs5y88dnfmjxwskybgb8"))))
        ("mozcdic-ut-sudachidict"
          ,(origin
            (method git-fetch)
            (uri (git-reference
                  (url "https://github.com/utuhiro78/mozcdic-ut-sudachidict")
-                 (commit "39c8c2c16b326a5d9ba63a9d2f13032533ae1634")))
+                 (commit "c109f062a6c80e52be4b96adbf4123404b2048d1")))
            (file-name "mozcdic-ut-sudachidict")
            (sha256
-             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-sudachidict /tmp/ac/mozcdic-ut-sudachidict &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-sudachidict && rm -rf /tmp/ac/mozcdic-ut-sudachidict
+             ;; git clone --depth 1 https://github.com/utuhiro78/mozcdic-ut-sudachidict /tmp/ac/mozcdic-ut-sudachidict &&  guix hash --serializer=nar -x /tmp/ac/mozcdic-ut-sudachidict
              (base32
-               "0ns4alj8pfprp6bncngss94swsrgxxi7zqa05zw34qg6sjch2gbm"))))
+               "1xhic4bx2z1hhgwc539ad0r76qpqq89miqa33jxzbkx299zinkw1"))))
        ("jawiki-titles"
          ,(origin
            (method url-fetch)
            (uri "https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz")
            (file-name "jawiki-latest-all-titles-in-ns0.gz")
            (sha256
-             ;; guix download https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz -o /tmp/ac/jawiki-latest-all-titles-in-ns0.gz && rm -rf /tmp/ac/jawiki-latest-all-titles-in-ns0.gz
+             ;; guix download https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz -o /tmp/ac/jawiki-latest-all-titles-in-ns0.gz
              (base32
-               "0l0vx44n7ns0ir273faj51cfp83nsnxqnlxj7yw1cmdxdlsi0zab"))))))
+               "13147hn9yssmajfsbdxs1fqlf1r24qnvvqk6bvgqx24aifsjxi0w"))))))
     (native-inputs
       (modify-inputs (package-native-inputs ibus-mozc)
         (append coreutils ruby tar)))))
