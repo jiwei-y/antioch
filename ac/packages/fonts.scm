@@ -33,7 +33,7 @@
   (package
     (inherit font-google-noto)
     (name "font-google-noto-git")
-    (version "24.4.1")
+    (version "24.5.1")
     (source
      (origin
        (method git-fetch)
@@ -42,8 +42,8 @@
              (commit (string-append "noto-monthly-release-" version))))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone -b noto-monthly-release-24.4.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/ac/noto && guix hash --serializer=nar -x /tmp/ac/noto && rm -rf /tmp/ac/noto
-        (base32 "1lm9brd61dsmjpr40s4iznqjqpz9giayfyfhyzxnnxzcj5lqjfgv"))))))
+        ;; git clone -b noto-monthly-release-24.5.1 --depth 1 https://github.com/notofonts/notofonts.github.io /tmp/ac/noto && guix hash --serializer=nar -x /tmp/ac/noto
+        (base32 "1xd7yy9az19f4sp0nc9b8was8gp3sbpn3jny434s73lw6rcs2mbr"))))))
 
 (define-public font-google-noto-sans-cjk-superotc
   (package
