@@ -35,16 +35,16 @@
 (define-public ibus-typing-booster
   (package
     (name "ibus-typing-booster")
-    (version "2.24.4")
+    (version "2.25.7")
     (source (origin
               (method url-fetch)
               (uri (string-append
                     "https://github.com/mike-fabian/ibus-typing-booster/releases/download/"
                     version "/ibus-typing-booster-" version ".tar.gz"))
               (sha256
-               ;; guix download https://github.com/mike-fabian/ibus-typing-booster/releases/download/2.24.4/ibus-typing-booster-2.24.4.tar.gz -o /tmp/ac/ibus-typing-booster-2.24.4.tar.gz && rm -rf /tmp/ac/ibus-typing-booster-2.24.4.tar.gz
+               ;; guix download https://github.com/mike-fabian/ibus-typing-booster/releases/download/2.25.7/ibus-typing-booster-2.25.7.tar.gz -o /tmp/ac/ibus-typing-booster-2.25.7.tar.gz
                (base32
-                "1a8mbjs1k1mf6y17pgrypmm2sl3dchymhll4zbpqk54ih34gga6p"))))
+                "13xfqcs57bihwm6ncgamj7w7cizavy67w5501qana341znzr1mnz"))))
     (build-system glib-or-gtk-build-system)
     (arguments
      (list
