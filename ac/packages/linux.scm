@@ -140,11 +140,11 @@
       ("CONFIG_HIBERNATION" . #t)
 
       ;; Required by LKRG:
-;      ("CONFIG_KALLSYMS" . #t)
-;      ("CONFIG_KPROBES" . #t)
-;      ("CONFIG_TRIM_UNUSED_KSYMS" . #f)   ;; required if lkrg should be built as an out-of-tree kernel module
-;      ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #t)
-;      ("CONFIG_SECURITY_SELINUX_DEVELOP" . #t)
+      ("CONFIG_KALLSYMS" . #t)
+      ("CONFIG_KPROBES" . #t)
+      ("CONFIG_TRIM_UNUSED_KSYMS" . #f)   ;; required if lkrg should be built as an out-of-tree kernel module
+      ("CONFIG_SECURITY_SELINUX_BOOTPARAM" . #t)
+      ("CONFIG_SECURITY_SELINUX_DEVELOP" . #t)
       ;; LKRG in-tree module (not supported yet)
       ;("CONFIG_SECURITY_LKRG" . #t)
 
