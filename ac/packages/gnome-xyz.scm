@@ -41,7 +41,7 @@
 (define-public orchis-theme
   (package
     (name "orchis-theme")
-    (version "2024-04-01")
+    (version "2024-05-01")
     (source
       (origin
         (method git-fetch)
@@ -51,9 +51,9 @@
             (commit version)))
         (file-name (git-file-name name version))
         (sha256
-          ; git clone -b 2024-04-01 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/ac/Orchis-theme && guix hash --serializer=nar -x /tmp/ac/Orchis-theme
+          ; git clone -b 2024-05-01 --depth 1 https://github.com/vinceliuice/Orchis-theme /tmp/ac/Orchis-theme && guix hash --serializer=nar -x /tmp/ac/Orchis-theme
           (base32
-           "00gmrxd9jw1m9bwza0aavr6dyg7fmjjwznh99p0hm5lnj58z5k42"))
+           "10x0gppaaswsma43g1vf5my0r75fjcf0hf2680mb9sbs7rhj8bn6"))
         (modules '((guix build utils)
                    (ice-9 regex)
                    (srfi srfi-26)))
@@ -75,7 +75,7 @@
                                     "/share/themes")
                           "--theme" "all"
                           "--libadwaita"
-                          "--shell" "42")
+                          "--shell" "44")
        #:tests? #f ; no tests
        #:phases
        (modify-phases %standard-phases
