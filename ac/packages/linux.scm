@@ -311,17 +311,17 @@
   (package
     (inherit tlp)
     (name "tlp-git")
-    (version "20240303")
+    (version "20240522")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/linrunner/TLP")
-             (commit "3a12e12fd2bea8e7662c3dd7b646e124f8c60168")))
+             (commit "8b36cc571d39845db12f8b7d0cf14b1c84dc6b2c")))
        (file-name (git-file-name name version))
        (sha256
-        ;; git clone --depth 1 https://github.com/linrunner/TLP /tmp/ac/TLP && guix hash --serializer=nar -x /tmp/ac/TLP && rm -rf /tmp/ac/TLP
-        (base32 "1gyhx1i2z2yipgpnjylmspzhv2cxmf5f0rx9si9l28zpjwan3g2y"))))
+        ;; git clone --depth 1 https://github.com/linrunner/TLP /tmp/ac/TLP && guix hash --serializer=nar -x /tmp/ac/TLP
+        (base32 "11vb8bpkqhwpry75axpqybnq6d3502c1x2azfvvwh5q5g3skdgvi"))))
     (arguments
         (substitute-keyword-arguments (package-arguments tlp)
           ((#:phases phases)
