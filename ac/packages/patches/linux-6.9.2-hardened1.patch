@@ -102,13 +102,13 @@ index bd50df6a5a42..05c4eaa006b0 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index a7045435151e..191f259b4d08 100644
+index 8302496ee7a5..5e3e9265da8c 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 9
- SUBLEVEL = 1
+ SUBLEVEL = 2
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
