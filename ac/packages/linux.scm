@@ -240,7 +240,7 @@
   (package 
     (inherit lkrg)
     (name "lkrg-git")
-    (version "20230522")
+    (version "20240522")
     (source (origin
               (method git-fetch)
               (uri (git-reference
