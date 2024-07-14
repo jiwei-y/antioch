@@ -33,9 +33,6 @@
 (define source-with-patches
   (@@ (gnu packages linux) source-with-patches))
 
-(define %default-extra-linux-options
-  (@@ (gnu packages linux) %default-extra-linux-options))
-
 (define config->string
   (@@ (gnu packages linux) config->string))
 
@@ -214,7 +211,7 @@
                                                 ;; support missing.
                                                 (append ;%waydroid-extra-linux-options
                                                         %personal-extra-options
-                                                        %default-extra-linux-options))))
+                                                        ((@@ (gnu packages linux) default-extra-linux-options) version)))))
                     (display extra-configuration port)
                     (close-port port))
                   (invoke "make" "oldconfig")
