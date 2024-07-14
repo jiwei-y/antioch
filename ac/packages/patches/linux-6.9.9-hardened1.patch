@@ -102,13 +102,13 @@ index bd50df6a5a42..05c4eaa006b0 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index 8302496ee7a5..5e3e9265da8c 100644
+index cbe3a580ff48..10dfdef01e86 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 9
- SUBLEVEL = 2
+ SUBLEVEL = 9
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Hurr durr I'ma ninja sloth
@@ -165,7 +165,7 @@ index 7b11c98b3e84..239876e88ee3 100644
  	  Randomizes the virtual address at which the kernel image is
  	  loaded, as a security feature that deters exploit attempts
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 2c30d617e180..18e8a8c761ad 100644
+index 8d39b863251b..65f0856469e1 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
 @@ -1,4 +1,3 @@
@@ -209,7 +209,7 @@ index 3f93f4eef953..ac3805f359de 100644
  
  #ifdef __AARCH64EB__
 diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
-index 928820e61cb5..90f3246bdf2c 100644
+index f5b3d14ff385..b0c57254514e 100644
 --- a/arch/x86/Kconfig
 +++ b/arch/x86/Kconfig
 @@ -1231,8 +1231,7 @@ config VM86
@@ -306,7 +306,7 @@ index 25726893c6f4..cd4b5781260d 100644
  	native_write_cr4(cr4);
  }
 diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index 605c26c009c8..25de6978e46d 100644
+index 198200782827..8770e6c5ad64 100644
 --- a/arch/x86/kernel/cpu/common.c
 +++ b/arch/x86/kernel/cpu/common.c
 @@ -447,6 +447,7 @@ EXPORT_SYMBOL_GPL(native_write_cr4);
@@ -374,10 +374,10 @@ index 7e177856ee4f..59e6dcb28b14 100644
  /* Used in PAGE_KERNEL_* macros which are reasonably used out-of-tree: */
  EXPORT_SYMBOL(__default_kernel_pte_mask);
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 32afb87efbd0..3ac1bb62f1fb 100644
+index 5ac2087b0563..f5de8986a44a 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
-@@ -1129,7 +1129,7 @@ static void blk_complete_reqs(struct llist_head *list)
+@@ -1133,7 +1133,7 @@ static void blk_complete_reqs(struct llist_head *list)
  		rq->q->mq_ops->complete(rq);
  }
  
@@ -387,10 +387,10 @@ index 32afb87efbd0..3ac1bb62f1fb 100644
  	blk_complete_reqs(this_cpu_ptr(&blk_cpu_done));
  }
 diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index c449d60d9bb9..3d2c5504d522 100644
+index d937e6e5cc7a..4b708d40ba83 100644
 --- a/drivers/ata/libata-core.c
 +++ b/drivers/ata/libata-core.c
-@@ -4800,7 +4800,7 @@ void __ata_qc_complete(struct ata_queued_cmd *qc)
+@@ -4806,7 +4806,7 @@ void __ata_qc_complete(struct ata_queued_cmd *qc)
  	struct ata_port *ap;
  	struct ata_link *link;
  
@@ -609,18 +609,18 @@ index a0c432b14b20..01d8505cd487 100644
  	usb_debugfs_cleanup();
  	idr_destroy(&usb_bus_idr);
 diff --git a/fs/exec.c b/fs/exec.c
-index cf1df7f16e55..9efe57a03da4 100644
+index 0c5f06d08c35..8420209e7822 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
-@@ -67,6 +67,7 @@
- #include <linux/time_namespace.h>
+@@ -68,6 +68,7 @@
  #include <linux/user_events.h>
  #include <linux/rseq.h>
+ #include <linux/ksm.h>
 +#include <linux/random.h>
  
  #include <linux/uaccess.h>
  #include <asm/mmu_context.h>
-@@ -286,6 +287,8 @@ static int __bprm_mm_init(struct linux_binprm *bprm)
+@@ -295,6 +296,8 @@ static int __bprm_mm_init(struct linux_binprm *bprm)
  	mm->stack_vm = mm->total_vm = 1;
  	mmap_write_unlock(mm);
  	bprm->p = vma->vm_end - sizeof(void *);
@@ -628,7 +628,7 @@ index cf1df7f16e55..9efe57a03da4 100644
 +		bprm->p ^= get_random_u32() & ~PAGE_MASK;
  	return 0;
  err:
- 	mmap_write_unlock(mm);
+ 	ksm_exit(mm);
 diff --git a/fs/inode.c b/fs/inode.c
 index 3a41f83a4ba5..547df4955a16 100644
 --- a/fs/inode.c
@@ -817,10 +817,10 @@ index 0c356a517991..1f7176393417 100644
  {
  	return true;
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 8dfd53b52744..a2008d7a6788 100644
+index b09f14132110..cab172218855 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
-@@ -3616,4 +3616,15 @@ extern int vfs_fadvise(struct file *file, loff_t offset, loff_t len,
+@@ -3618,4 +3618,15 @@ extern int vfs_fadvise(struct file *file, loff_t offset, loff_t len,
  extern int generic_fadvise(struct file *file, loff_t offset, loff_t len,
  			   int advice);
  
@@ -837,10 +837,10 @@ index 8dfd53b52744..a2008d7a6788 100644
 +
  #endif /* _LINUX_FS_H */
 diff --git a/include/linux/fsnotify.h b/include/linux/fsnotify.h
-index 1a9de119a0f7..6680d4bb853f 100644
+index f79853d2778b..ca8893ceae65 100644
 --- a/include/linux/fsnotify.h
 +++ b/include/linux/fsnotify.h
-@@ -103,6 +103,9 @@ static inline int fsnotify_file(struct file *file, __u32 mask)
+@@ -109,6 +109,9 @@ static inline int fsnotify_file(struct file *file, __u32 mask)
  		return 0;
  
  	path = &file->f_path;
@@ -1000,7 +1000,7 @@ index 6030a8235617..60b7fe5fa74a 100644
  {
  	return &init_user_ns;
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 6ae35199d3b3..3b0a2624c741 100644
+index 2bcf30381d75..fe73c911c76e 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
 @@ -257,6 +257,7 @@ static_assert((1 << ATO_BITS) > TCP_DELACK_MAX);
@@ -1012,7 +1012,7 @@ index 6ae35199d3b3..3b0a2624c741 100644
  #define TCP_RACK_LOSS_DETECTION  0x1 /* Use RACK to detect losses */
  #define TCP_RACK_STATIC_REO_WND  0x2 /* Use static RACK reo wnd */
 diff --git a/init/Kconfig b/init/Kconfig
-index 664bedb9a71f..2b5172221a0d 100644
+index 459f44ef7cc9..2ffb73745b55 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -458,6 +458,7 @@ config USELIB
@@ -1085,7 +1085,7 @@ index 664bedb9a71f..2b5172221a0d 100644
  	  This option enables POSIX asynchronous I/O which may by used
  	  by some high performance threaded applications. Disabling
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index c170a2b8d2cf..929f560beb39 100644
+index d3926a27714e..f4454ecd8f92 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
 @@ -149,7 +149,7 @@ static void io_queue_sqe(struct io_kiocb *req);
@@ -1123,7 +1123,7 @@ index e7a62ebbf4d1..9b53b2df497e 100644
  		pr_err("audit: error setting audit state (%d)\n",
  		       audit_default);
 diff --git a/kernel/bpf/core.c b/kernel/bpf/core.c
-index 1ea5ce5bb599..8db743cb8fe8 100644
+index 80bcfde92720..a737770471c1 100644
 --- a/kernel/bpf/core.c
 +++ b/kernel/bpf/core.c
 @@ -565,7 +565,7 @@ void bpf_prog_kallsyms_del_all(struct bpf_prog *fp)
@@ -1153,7 +1153,7 @@ index dac4df77e376..68bb3279b14f 100644
  
  /**
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 724e6d7e128f..633d6072e090 100644
+index 4082d0161b2b..fdfe9beb44d7 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
 @@ -415,8 +415,13 @@ static struct kmem_cache *perf_event_cache;
@@ -1170,7 +1170,7 @@ index 724e6d7e128f..633d6072e090 100644
  
  /* Minimum for 512 kiB + 1 user control page */
  int sysctl_perf_event_mlock __read_mostly = 512 + (PAGE_SIZE / 1024); /* 'free' kiB per user */
-@@ -12441,7 +12446,7 @@ SYSCALL_DEFINE5(perf_event_open,
+@@ -12454,7 +12459,7 @@ SYSCALL_DEFINE5(perf_event_open,
  		return err;
  
  	/* Do we allow access to perf_event_open(2) ? */
@@ -1262,10 +1262,10 @@ index d9642dd06c25..cf39746d9a39 100644
  	rcu_core();
  }
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c62805dbd608..8a2b97356ca0 100644
+index 213c94d027a4..69c41cb4c0a7 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -12412,7 +12412,7 @@ static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
+@@ -12427,7 +12427,7 @@ static int newidle_balance(struct rq *this_rq, struct rq_flags *rf)
   * run_rebalance_domains is triggered when needed from the scheduler tick.
   * Also triggered for nohz idle balancing (with nohz_balancing_kick set).
   */
@@ -1755,7 +1755,7 @@ index 6dbda99a47da..9c7fa21d348d 100644
  		mm->brk = brk;
  		goto success;
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 14d39f34d336..ba7e87419dc9 100644
+index 00fafda76bde..bab8d2da83c9 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -182,6 +182,15 @@ EXPORT_PER_CPU_SYMBOL(_numa_mem_);
@@ -1774,7 +1774,7 @@ index 14d39f34d336..ba7e87419dc9 100644
  #ifdef CONFIG_GCC_PLUGIN_LATENT_ENTROPY
  volatile unsigned long latent_entropy __latent_entropy;
  EXPORT_SYMBOL(latent_entropy);
-@@ -1282,6 +1291,25 @@ static void __free_pages_ok(struct page *page, unsigned int order,
+@@ -1287,6 +1296,25 @@ static void __free_pages_ok(struct page *page, unsigned int order,
  	__count_vm_events(PGFREE, 1 << order);
  }
  
@@ -1800,7 +1800,7 @@ index 14d39f34d336..ba7e87419dc9 100644
  void __free_pages_core(struct page *page, unsigned int order)
  {
  	unsigned int nr_pages = 1 << order;
-@@ -1301,7 +1329,6 @@ void __free_pages_core(struct page *page, unsigned int order)
+@@ -1306,7 +1334,6 @@ void __free_pages_core(struct page *page, unsigned int order)
  	}
  	__ClearPageReserved(p);
  	set_page_count(p, 0);
@@ -1808,7 +1808,7 @@ index 14d39f34d336..ba7e87419dc9 100644
  	atomic_long_add(nr_pages, &page_zone(page)->managed_pages);
  
  	if (page_contains_unaccepted(page, order)) {
-@@ -1496,6 +1523,12 @@ inline void post_alloc_hook(struct page *page, unsigned int order,
+@@ -1501,6 +1528,12 @@ inline void post_alloc_hook(struct page *page, unsigned int order,
  	 */
  	kernel_unpoison_pages(page, 1 << order);
  
@@ -2333,7 +2333,7 @@ index 669397235787..8a23286d5e16 100644
  
  unsigned long arch_mmap_rnd(void)
 diff --git a/net/core/dev.c b/net/core/dev.c
-index 331848eca7d3..5ce3a45128bc 100644
+index e8fb4ef8a85f..56a05903ecab 100644
 --- a/net/core/dev.c
 +++ b/net/core/dev.c
 @@ -5131,7 +5131,7 @@ int netif_rx(struct sk_buff *skb)
@@ -2414,7 +2414,7 @@ index 7e4f16a7dcc1..afc8bf021413 100644
  };
  
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index a140d9f7a0a3..35f8425b27eb 100644
+index 7b692bcb61d4..8d8518c18e76 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -82,6 +82,7 @@
@@ -2425,7 +2425,7 @@ index a140d9f7a0a3..35f8425b27eb 100644
  
  #define FLAG_DATA		0x01 /* Incoming frame contained data.		*/
  #define FLAG_WIN_UPDATE		0x02 /* Incoming ACK was a window update.	*/
-@@ -6500,7 +6501,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
+@@ -6524,7 +6525,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  		SKB_DR_SET(reason, TCP_RFC7323_PAWS);
  		goto discard_and_undo;
  	}
@@ -2463,7 +2463,7 @@ index e383cda05367..929997fb5e45 100644
  	  secure!
  
 diff --git a/scripts/mod/modpost.c b/scripts/mod/modpost.c
-index 2f5b91da5afa..cb673970f42a 100644
+index c27c762e6880..36fc4cb89197 100644
 --- a/scripts/mod/modpost.c
 +++ b/scripts/mod/modpost.c
 @@ -38,6 +38,8 @@ static bool sec_mismatch_warn_only = true;
@@ -2523,7 +2523,7 @@ index 2f5b91da5afa..cb673970f42a 100644
  	}
  }
  
-@@ -2193,7 +2213,7 @@ int main(int argc, char **argv)
+@@ -2194,7 +2214,7 @@ int main(int argc, char **argv)
  	LIST_HEAD(dump_lists);
  	struct dump_list *dl, *dl2;
  
@@ -2532,7 +2532,7 @@ index 2f5b91da5afa..cb673970f42a 100644
  		switch (opt) {
  		case 'e':
  			external_module = true;
-@@ -2203,6 +2223,9 @@ int main(int argc, char **argv)
+@@ -2204,6 +2224,9 @@ int main(int argc, char **argv)
  			dl->file = optarg;
  			list_add_tail(&dl->list, &dump_lists);
  			break;
@@ -2542,7 +2542,7 @@ index 2f5b91da5afa..cb673970f42a 100644
  		case 'M':
  			module_enabled = true;
  			break;
-@@ -2293,5 +2316,11 @@ int main(int argc, char **argv)
+@@ -2294,5 +2317,11 @@ int main(int argc, char **argv)
  		warn("suppressed %u unresolved symbol warnings because there were too many)\n",
  		     nr_unresolved - MAX_UNRESOLVED_REPORTS);
  

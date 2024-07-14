@@ -39,13 +39,13 @@
 (define config->string
   (@@ (gnu packages linux) config->string))
 
-(define-public upstream-version "6.9.3")
+(define-public upstream-version "6.9.9")
 (define-public upstream-major-version
   (version-major+minor upstream-version))
-(define-public xanmod-hardened-version  "6.9.3")
-(define-public xanmod-version "6.9.3")
+(define-public xanmod-hardened-version  "6.9.9")
+(define-public xanmod-version "6.9.9")
 (define-public xanmod-revision "xanmod1")
-(define-public hardened-version "6.9.3")
+(define-public hardened-version "6.9.9")
 (define-public hardened-revision "hardened1")
 
 (define-public linux-pristine-source
@@ -58,18 +58,18 @@
 (define %xanmod-patch-main
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.9.3-xanmod1/patch-6.9.3-xanmod1.xz -o /tmp/ac/6.9.3-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/main/6.9.9-xanmod1/patch-6.9.9-xanmod1.xz -o /tmp/ac/6.9.9-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/main/" xanmod-version "-" xanmod-revision
                         "/patch-" xanmod-version "-" xanmod-revision ".xz"))
     (sha256 (base32
-             "100xmh3v3gskdg5ak18r00ka8drjg4vq7n4h7h2d06ibp8r0vhcn"))))
+             "0iya1i1h8bkkl34bp95j9h692awnqn4vhammh1vjpaan7zm6q4mp"))))
 
 (define %xanmod-patch-edge
   (origin
     (method url-fetch/xz-file)
-    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.9.3-xanmod1/patch-6.9.3-xanmod1.xz -o /tmp/ac/6.9.3-xanmod1.xz
+    ;; guix download https://sourceforge.net/projects/xanmod/files/releases/edge/6.9.9-xanmod1/patch-6.9.9-xanmod1.xz -o /tmp/ac/6.9.9-xanmod1.xz
     (file-name (string-append "linux-" xanmod-version "-" xanmod-revision ".patch"))
     (uri (string-append "https://sourceforge.net/projects/xanmod/files"
                         "/releases/edge/" xanmod-version "-" xanmod-revision
@@ -80,13 +80,13 @@
 (define %hardened-patch
   (origin
     (method url-fetch)
-    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/v6.9.3-hardened1/linux-hardened-v6.9.3-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.9.3-hardened1.patch 
+    ;; guix download https://github.com/anthraxx/linux-hardened/releases/download/v6.9.9-hardened1/linux-hardened-v6.9.9-hardened1.patch -o ~/all/antioch/ac/packages/patches/linux-6.9.9-hardened1.patch 
     (file-name (string-append "linux-" hardened-version "-" hardened-revision ".patch"))
     (uri (string-append
           "https://github.com/anthraxx/linux-hardened/releases/download/"
           hardened-version "-" hardened-revision "/linux-hardened-" hardened-version "-" hardened-revision ".patch"))
     (sha256 (base32
-             "15bq01h8haxjgv4b9wrp4kjaf5zkrrgxx6pgc79axf515ld36mf5"))))
+             "1jw6w18ffdsc86y6cia3fy90bxjdknmglan3jrfvlh6k62ycj75b"))))
 
 (define-public xanmod-hardened-source
   (origin
@@ -96,7 +96,7 @@
                     ;%xanmod-patch-edge
                     ;%hardened-patch
                     ;; find ".procname	= "unprivileged_userns_clone",", delete that trunk
-                    (local-file "patches/linux-6.9.3-hardened1.patch"))))
+                    (local-file "patches/linux-6.9.9-hardened1.patch"))))
     (modules '((guix build utils)))))
 
 ;(define-public xanmod-source
