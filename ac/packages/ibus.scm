@@ -435,7 +435,7 @@ Recently the capability to type different languages at the same time without hav
            (sha256
              ;; guix download https://dumps.wikimedia.org/jawiki/latest/jawiki-latest-all-titles-in-ns0.gz -o /tmp/ac/jawiki-latest-all-titles-in-ns0.gz
              (base32
-               "13147hn9yssmajfsbdxs1fqlf1r24qnvvqk6bvgqx24aifsjxi0w"))))))
+               "0ak219qbydslmq0yfcfj34hh2plmlylcbj28gra437swinijdi5n"))))))
     (native-inputs
       (modify-inputs (package-native-inputs ibus-mozc)
         (append coreutils ruby tar)))))
