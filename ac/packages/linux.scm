@@ -290,18 +290,18 @@
   (package
     (inherit kconfig-hardened-check)
     (name "kernel-hardening-checker-git")
-    (version "20240707")
+    (version "20240728")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/a13xp0p0v/kernel-hardening-checker")
              ; https://github.com/a13xp0p0v/kernel-hardening-checker/commits/master
-             (commit "eb1f11a8f647309c7d7f425c8ef28ca82f6b3ba5")))
+             (commit "ef9b95f6594bb1c210048cb9a5ef700d669a7fd9")))
        (file-name (git-file-name name version))
        (sha256
         ; git clone --depth 1 https://github.com/a13xp0p0v/kernel-hardening-checker /tmp/ac/kernel-hardening-checker && guix hash --serializer=nar -x /tmp/ac/kernel-hardening-checker
-        (base32 "1yb4lirn6wcvs31zsb234ic3v31gacz83hgf43sqx9al75mhjsc8"))))
+        (base32 "17vpshsamvrw2gv8i1yi120n0w9x8pfd4kv3kbmrc6i0vxn132k1"))))
     (license gpl3)))
 
 (define-public tlp-git
