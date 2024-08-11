@@ -1,5 +1,5 @@
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 27ec49af1bf2..c19a1165686d 100644
+index 2569e7f19b47..a9fd4402e79a 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -610,17 +610,6 @@
@@ -102,13 +102,13 @@ index bd50df6a5a42..05c4eaa006b0 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index 07e1aec72c17..e8b91458c41b 100644
+index c0af6d8aeb05..11acfdb3386e 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 10
- SUBLEVEL = 2
+ SUBLEVEL = 3
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Baby Opossum Posse
@@ -374,7 +374,7 @@ index 7e177856ee4f..59e6dcb28b14 100644
  /* Used in PAGE_KERNEL_* macros which are reasonably used out-of-tree: */
  EXPORT_SYMBOL(__default_kernel_pte_mask);
 diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 3b4df8e5ac9e..ccede45f71fa 100644
+index 1c85a5c79ee6..b8fbbb8e5aee 100644
 --- a/block/blk-mq.c
 +++ b/block/blk-mq.c
 @@ -1132,7 +1132,7 @@ static void blk_complete_reqs(struct llist_head *list)
@@ -868,7 +868,7 @@ index 00341b56d291..ed71f21ef4cd 100644
   * If we pass in a base or tail page, we can zero up to PAGE_SIZE.
   * If we pass in a head page, we can zero up to the size of the compound page.
 diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index 5c9bdd3ffccc..1b537a779f63 100644
+index dac7466de5f3..94709f4415e8 100644
 --- a/include/linux/interrupt.h
 +++ b/include/linux/interrupt.h
 @@ -590,7 +590,7 @@ extern const char * const softirq_to_name[NR_SOFTIRQS];
@@ -903,10 +903,10 @@ index be707748e7ce..40b0d6710f10 100644
  const struct kobj_ns_type_operations *kobj_child_ns_ops(const struct kobject *parent);
  const struct kobj_ns_type_operations *kobj_ns_ops(const struct kobject *kobj);
 diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-index a5304ae8c654..7da75be4855b 100644
+index 393fb13733b0..63468e60eef9 100644
 --- a/include/linux/perf_event.h
 +++ b/include/linux/perf_event.h
-@@ -1607,6 +1607,14 @@ static inline int perf_is_paranoid(void)
+@@ -1608,6 +1608,14 @@ static inline int perf_is_paranoid(void)
  	return sysctl_perf_event_paranoid > -1;
  }
  
@@ -999,7 +999,7 @@ index 6030a8235617..60b7fe5fa74a 100644
  {
  	return &init_user_ns;
 diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 060e95b331a2..1d36bca67b13 100644
+index 32815a40dea1..6ef5bc57b6bb 100644
 --- a/include/net/tcp.h
 +++ b/include/net/tcp.h
 @@ -259,6 +259,7 @@ static_assert((1 << ATO_BITS) > TCP_DELACK_MAX);
@@ -1084,7 +1084,7 @@ index febdea2afc3b..277b1c7255e9 100644
  	  This option enables POSIX asynchronous I/O which may by used
  	  by some high performance threaded applications. Disabling
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index c326e2127dd4..251b0d8d594c 100644
+index 896e707e0618..aff6edcb6cba 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
 @@ -150,7 +150,7 @@ static void io_queue_sqe(struct io_kiocb *req);
@@ -1152,7 +1152,7 @@ index dac4df77e376..68bb3279b14f 100644
  
  /**
 diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 8f908f077935..af7ec5b8a1ab 100644
+index b2a6aec118f3..20695023d9d1 100644
 --- a/kernel/events/core.c
 +++ b/kernel/events/core.c
 @@ -415,8 +415,13 @@ static struct kmem_cache *perf_event_cache;
@@ -1169,7 +1169,7 @@ index 8f908f077935..af7ec5b8a1ab 100644
  
  /* Minimum for 512 kiB + 1 user control page */
  int sysctl_perf_event_mlock __read_mostly = 512 + (PAGE_SIZE / 1024); /* 'free' kiB per user */
-@@ -12469,7 +12474,7 @@ SYSCALL_DEFINE5(perf_event_open,
+@@ -12496,7 +12501,7 @@ SYSCALL_DEFINE5(perf_event_open,
  		return err;
  
  	/* Do we allow access to perf_event_open(2) ? */
@@ -1261,10 +1261,10 @@ index 28c7031711a3..f23b5e504c70 100644
  	rcu_core();
  }
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 24dda708b699..1595e5eab8ae 100644
+index 483c137b9d3d..9c00851b7a36 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -12477,7 +12477,7 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
+@@ -12476,7 +12476,7 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
   * - indirectly from a remote scheduler_tick() for NOHZ idle balancing
   *   through the SMP cross-call nohz_csd_func()
   */
@@ -1754,7 +1754,7 @@ index 83b4682ec85c..806d2aa015f5 100644
  		mm->brk = brk;
  		goto success;
 diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 9ecf99190ea2..cfa0e83103b6 100644
+index df2c442f1c47..c165f3887a74 100644
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
 @@ -183,6 +183,15 @@ EXPORT_PER_CPU_SYMBOL(_numa_mem_);
@@ -2427,7 +2427,7 @@ index 162a0a3b6ba5..a01ac7b2956a 100644
  
  static struct ctl_table ipv4_net_table[] = {
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 38da23f991d6..0aa604516901 100644
+index 570e87ad9a56..31cf2fc71ae1 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -83,6 +83,7 @@
@@ -2438,7 +2438,7 @@ index 38da23f991d6..0aa604516901 100644
  
  #define FLAG_DATA		0x01 /* Incoming frame contained data.		*/
  #define FLAG_WIN_UPDATE		0x02 /* Incoming ACK was a window update.	*/
-@@ -6541,7 +6542,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
+@@ -6551,7 +6552,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  		SKB_DR_SET(reason, TCP_RFC7323_PAWS);
  		goto discard_and_undo;
  	}
@@ -2710,7 +2710,7 @@ index 61abc1e094a8..ceda05c0c4f6 100644
  	  This selects Security-Enhanced Linux (SELinux).
  	  You will also need a policy configuration and a labeled filesystem.
 diff --git a/security/selinux/hooks.c b/security/selinux/hooks.c
-index 7eed331e90f0..194bbee96974 100644
+index 55c78c318ccd..1fcfcabd0cd4 100644
 --- a/security/selinux/hooks.c
 +++ b/security/selinux/hooks.c
 @@ -140,18 +140,6 @@ static int __init selinux_enabled_setup(char *str)
