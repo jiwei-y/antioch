@@ -1,5 +1,5 @@
 diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 2569e7f19b47..a9fd4402e79a 100644
+index c82446cef8e2..9629cf2258f9 100644
 --- a/Documentation/admin-guide/kernel-parameters.txt
 +++ b/Documentation/admin-guide/kernel-parameters.txt
 @@ -610,17 +610,6 @@
@@ -102,13 +102,13 @@ index bd50df6a5a42..05c4eaa006b0 100644
  	If set, provide RFC2861 behavior and time out the congestion
  	window after an idle period.  An idle period is defined at
 diff --git a/Makefile b/Makefile
-index c0af6d8aeb05..11acfdb3386e 100644
+index 361a70264e1f..97c8c80b1544 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -2,7 +2,7 @@
  VERSION = 6
  PATCHLEVEL = 10
- SUBLEVEL = 3
+ SUBLEVEL = 6
 -EXTRAVERSION =
 +EXTRAVERSION = -hardened1
  NAME = Baby Opossum Posse
@@ -145,10 +145,10 @@ index 975dd22a2dbd..0fa445bd5830 100644
  	  Kernel stack offset randomization is controlled by kernel boot param
  	  "randomize_kstack_offset=on/off", and this config chooses the default
 diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
-index 5d91259ee7b5..4c86528eb309 100644
+index 11bbdc15c6e5..d6a7af42d09e 100644
 --- a/arch/arm64/Kconfig
 +++ b/arch/arm64/Kconfig
-@@ -1649,6 +1649,7 @@ config RODATA_FULL_DEFAULT_ENABLED
+@@ -1645,6 +1645,7 @@ config RODATA_FULL_DEFAULT_ENABLED
  
  config ARM64_SW_TTBR0_PAN
  	bool "Emulate Privileged Access Never using TTBR0_EL1 switching"
@@ -156,7 +156,7 @@ index 5d91259ee7b5..4c86528eb309 100644
  	help
  	  Enabling this option prevents the kernel from accessing
  	  user-space memory directly by pointing TTBR0_EL1 to a reserved
-@@ -2223,6 +2224,7 @@ config RELOCATABLE
+@@ -2219,6 +2220,7 @@ config RELOCATABLE
  config RANDOMIZE_BASE
  	bool "Randomize the address of the kernel image"
  	select RELOCATABLE
@@ -609,7 +609,7 @@ index a0c432b14b20..01d8505cd487 100644
  	usb_debugfs_cleanup();
  	idr_destroy(&usb_bus_idr);
 diff --git a/fs/exec.c b/fs/exec.c
-index 40073142288f..a0209f6a8546 100644
+index 0c17e59e3767..9b460ce0e326 100644
 --- a/fs/exec.c
 +++ b/fs/exec.c
 @@ -68,6 +68,7 @@
@@ -817,7 +817,7 @@ index 0c356a517991..1f7176393417 100644
  {
  	return true;
 diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 0283cf366c2a..55766f0db64e 100644
+index 93ac1a859d69..2656e1b8d710 100644
 --- a/include/linux/fs.h
 +++ b/include/linux/fs.h
 @@ -3613,4 +3613,15 @@ extern int vfs_fadvise(struct file *file, loff_t offset, loff_t len,
@@ -1011,7 +1011,7 @@ index 32815a40dea1..6ef5bc57b6bb 100644
  #define TCP_RACK_LOSS_DETECTION  0x1 /* Use RACK to detect losses */
  #define TCP_RACK_STATIC_REO_WND  0x2 /* Use static RACK reo wnd */
 diff --git a/init/Kconfig b/init/Kconfig
-index febdea2afc3b..277b1c7255e9 100644
+index d8a971b804d3..c656a3a682fb 100644
 --- a/init/Kconfig
 +++ b/init/Kconfig
 @@ -458,6 +458,7 @@ config USELIB
@@ -1248,7 +1248,7 @@ index 4402d6f5f857..b3b3ce34df63 100644
  	struct rcu_head *next, *list;
  	unsigned long flags;
 diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 28c7031711a3..f23b5e504c70 100644
+index 63fb007beeaf..ab91d9f68e4d 100644
 --- a/kernel/rcu/tree.c
 +++ b/kernel/rcu/tree.c
 @@ -2821,7 +2821,7 @@ static __latent_entropy void rcu_core(void)
@@ -1902,7 +1902,7 @@ index 1560a1546bb1..10f4275cad73 100644
  static int __init setup_slab_nomerge(char *str)
  {
 diff --git a/mm/slub.c b/mm/slub.c
-index 4927edec6a8c..1b3616f0d462 100644
+index 849e8972e2ff..73a26a619f16 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
 @@ -39,6 +39,7 @@
@@ -2217,7 +2217,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  
  	kmemleak_free(object);
  	kasan_kfree_large(object);
-@@ -4686,7 +4803,7 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+@@ -4689,7 +4806,7 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
  {
  	struct kmem_cache_cpu *c;
  	unsigned long irqflags;
@@ -2226,7 +2226,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  
  	/*
  	 * Drain objects in the per cpu slab, while disabling local
-@@ -4742,6 +4859,28 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+@@ -4745,6 +4862,28 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
  	local_unlock_irqrestore(&s->cpu_slab->lock, irqflags);
  	slub_put_cpu_ptr(s->cpu_slab);
  
@@ -2255,7 +2255,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  	return i;
  
  error:
-@@ -4785,6 +4924,7 @@ int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
+@@ -4788,6 +4927,7 @@ int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
  				 void **p)
  {
  	int i;
@@ -2263,7 +2263,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  
  	if (!size)
  		return 0;
-@@ -4801,8 +4941,11 @@ int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
+@@ -4804,8 +4944,11 @@ int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
  	 * memcg and kmem_cache debug support and memory initialization.
  	 * Done outside of the IRQ disabled fastpath loop.
  	 */
@@ -2276,7 +2276,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  		return 0;
  	}
  	return i;
-@@ -4829,10 +4972,10 @@ EXPORT_SYMBOL(kmem_cache_alloc_bulk_noprof);
+@@ -4832,10 +4975,10 @@ EXPORT_SYMBOL(kmem_cache_alloc_bulk_noprof);
   * and increases the number of allocations possible without having to
   * take the list_lock.
   */
@@ -2290,7 +2290,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  
  /*
   * Calculate the order of allocation given an slab object size.
-@@ -5014,6 +5157,7 @@ static void early_kmem_cache_node_alloc(int node)
+@@ -5017,6 +5160,7 @@ static void early_kmem_cache_node_alloc(int node)
  #ifdef CONFIG_SLUB_DEBUG
  	init_object(kmem_cache_node, n, SLUB_RED_ACTIVE);
  #endif
@@ -2298,7 +2298,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  	n = kasan_slab_alloc(kmem_cache_node, n, GFP_KERNEL, false);
  	slab->freelist = get_freepointer(kmem_cache_node, n);
  	slab->inuse = 1;
-@@ -5180,6 +5324,9 @@ static int calculate_sizes(struct kmem_cache *s)
+@@ -5183,6 +5327,9 @@ static int calculate_sizes(struct kmem_cache *s)
  		s->offset = ALIGN_DOWN(s->object_size / 2, sizeof(void *));
  	}
  
@@ -2308,7 +2308,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  #ifdef CONFIG_SLUB_DEBUG
  	if (flags & SLAB_STORE_USER) {
  		/*
-@@ -5251,6 +5398,10 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
+@@ -5254,6 +5401,10 @@ static int kmem_cache_open(struct kmem_cache *s, slab_flags_t flags)
  #ifdef CONFIG_SLAB_FREELIST_HARDENED
  	s->random = get_random_long();
  #endif
@@ -2319,7 +2319,7 @@ index 4927edec6a8c..1b3616f0d462 100644
  
  	if (!calculate_sizes(s))
  		goto error;
-@@ -5524,6 +5675,9 @@ void __check_heap_object(const void *ptr, unsigned long n,
+@@ -5527,6 +5678,9 @@ void __check_heap_object(const void *ptr, unsigned long n,
  		offset -= s->red_left_pad;
  	}
  
@@ -2427,7 +2427,7 @@ index 162a0a3b6ba5..a01ac7b2956a 100644
  
  static struct ctl_table ipv4_net_table[] = {
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 570e87ad9a56..31cf2fc71ae1 100644
+index ecd521108559..58caaab9d742 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
 @@ -83,6 +83,7 @@
@@ -2438,7 +2438,7 @@ index 570e87ad9a56..31cf2fc71ae1 100644
  
  #define FLAG_DATA		0x01 /* Incoming frame contained data.		*/
  #define FLAG_WIN_UPDATE		0x02 /* Incoming ACK was a window update.	*/
-@@ -6551,7 +6552,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
+@@ -6560,7 +6561,7 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
  		SKB_DR_SET(reason, TCP_RFC7323_PAWS);
  		goto discard_and_undo;
  	}
