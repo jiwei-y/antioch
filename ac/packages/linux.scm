@@ -237,18 +237,18 @@
   (package 
     (inherit lkrg)
     (name "lkrg-git")
-    (version "20240806")
+    (version "20240828")
     (source (origin
               (method git-fetch)
               (uri (git-reference
                     (url "https://github.com/lkrg-org/lkrg")
-                    (commit "b144a0e4d97fd23b5cf308e656beed15c89d6216")))
+                    (commit "2c1b850659caabaa9d7daaa9f52ee4e2836e0dec")))
                     ;; https://github.com/lkrg-org/lkrg/commits/main
               (file-name (git-file-name name version))
               (sha256
                ; git clone --depth 1 https://github.com/lkrg-org/lkrg /tmp/ac/lkrg && guix hash --serializer=nar -x /tmp/ac/lkrg
                (base32
-                "0w7vd1czmwrvsna8dd5wjyxhx2zw0iqgb5zk0kgph77p5h23yi3j"))))
+                "0s94p4zwp2yv8jpja4d2zf4lkz1hqjk133j0va39myj15wm6q2qs"))))
     (arguments
         (substitute-keyword-arguments (package-arguments lkrg)
           ((#:linux linux) linux-xanmod-hardened)
