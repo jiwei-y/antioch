@@ -15,13 +15,13 @@
 (define-public positron
   (package
     (name "positron")
-    (version "2025.01.0-39")
+    (version "2025.01.0-159")
     (source
      (let ((arch (match (or (%current-target-system) (%current-system))
                    (_ "x64")))
            (hash (match (or (%current-target-system) (%current-system))
                    (_
-                    "0n8alnq3aabwmix88yv17bbrx5vvzdw2pfjl0kc820435167xqzm"))))
+                    "0pk3dhxp7nhrkgdypshfacmx76ks9wz03dsdlhxa6zim95j3nzb2"))))
        (origin
         (method url-fetch)
         (uri
