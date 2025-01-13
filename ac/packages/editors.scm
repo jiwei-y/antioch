@@ -32,10 +32,21 @@
          (base32 hash)))))
     (build-system chromium-binary-build-system)
     (arguments
-     (list #:validate-runpath? #f ; TODO: fails on wrapped binary and included other files
+     (list #:modules `(((guix build glib-or-gtk-build-system) #:prefix glib-or-gtk:)
+                       (nonguix build chromium-binary-build-system)
+                       (nonguix build utils)
+                       (guix build utils))
+           #:imported-modules `((guix build glib-or-gtk-build-system)
+                                ,@%chromium-binary-build-system-modules)
+           #:validate-runpath? #f ; TODO: fails on wrapped binary and included other files
            #:substitutable? #f
            #:wrapper-plan
-           #~'("usr/share/positron/positron")
+            #~(let ((path "usr/share/positron/"))
+                (map (lambda (file)
+                       (string-append path file))
+                     '("positron"
+                       "resources/app/extensions/positron-r/resources/ark/ark"
+                       "resources/app/extensions/positron-supervisor/resources/kallichore/kcserver")))
            #:phases
            #~(modify-phases %standard-phases
                (replace 'unpack
@@ -88,7 +99,11 @@
                        prefix
                        (,(string-join
                           (list (string-append #$output "/usr/share/positron"))
-                          ":")))))))))
+                          ":"))))))
+               (add-after 'wrap-where-patchelf-does-not-work 'glib-or-gtk-compile-schemas
+                 (assoc-ref glib-or-gtk:%standard-phases 'glib-or-gtk-compile-schemas))
+               (add-after 'glib-or-gtk-compile-schemas 'glib-or-gtk-wrap
+                 (assoc-ref glib-or-gtk:%standard-phases 'glib-or-gtk-wrap)))))
     (supported-systems '("x86_64-linux"))
     (native-inputs
      (list tar))
