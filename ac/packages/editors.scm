@@ -5,6 +5,7 @@
 (define-module (ac packages editors)
   #:use-module (gnu packages base)
   #:use-module (gnu packages gtk)
+  #:use-module (gnu packages tls)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix packages)
@@ -108,7 +109,7 @@
     (native-inputs
      (list tar))
     (inputs
-     (list gdk-pixbuf))
+     (list gdk-pixbuf openssl))
     (home-page "https://positron.posit.co/")
     (synopsis "A next-generation data science IDE")
     (description "Positron is a next-generation data science IDE built by Posit PBC, an extensible, polyglot tool for writing code and exploring data, and a familiar environment for reproducible authoring and publishing.")
