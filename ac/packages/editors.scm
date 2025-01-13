@@ -9,7 +9,7 @@
   #:use-module (guix gexp)
   #:use-module (guix packages)
   #:use-module ((guix licenses) :prefix license:)
-  #:use-module (nonguix build-system chromium-binary)
+  #:use-module (orontes build-system chromium-binary)
   #:use-module (ice-9 match))
 
 (define-public positron
