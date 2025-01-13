@@ -121,7 +121,7 @@
 
       ,@inputs
       ;; Keep the standard inputs of 'gnu-build-system'.
-      ,@(standard-packages)))
+      ,@(append (fold alist-delete (standard-packages) '("gcc")))))
 
   (and (not target)                     ;XXX: no cross-compilation
        (bag
